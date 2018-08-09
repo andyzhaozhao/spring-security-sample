@@ -1,0 +1,121 @@
+<div class="sticky-header">
+    <div class="mail-box">
+        <!--<aside class="mail-nav mail-nav-bg-color">-->
+            <!--<div>-->
+                <!--<h4 id="myModalLabel">分配机构角色用户</h4>-->
+            <!--</div>-->
+            <!--<div class="mail-nav-body">-->
+                <!--<div class="panel">-->
+                    <!--<div class="panel-heading">-->
+                        <!--<div id="deptTree"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</aside>-->
+        <!-- 用户列表 -->
+        <div class="col-lg-12" id="section-mail-list"></div>
+        <div class="modal-footer">
+            <div class="text-center">
+                <button id="save" type="button" class="btn btn-primary">提交</button>
+                <button id="toBack" type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                <span id="tip"> </span>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var roleId = "";
+    $(document).ready(function () {
+        roleId = [[${roleId}]];
+
+        if (roleId == null) {
+            roleId = "";
+        }
+        refreshFunction();
+    });
+    function refreshFunction() {
+//        //加载机构树  -->start
+//        $.ajax({
+//            type: "Post",
+//            url: "sys/dept-tree-view",
+//            dataType: "json",
+//            success: function (result) {
+//                console.log(result);
+//                var data = result.ajaxResultJson.obj;
+//                $('#deptTree').treeview({
+//                    data: data,         // 数据源
+//                    //showCheckbox: true,   //是否显示复选框
+//                    color: "#000000",
+//                    backColor: "#FFFFFF",
+//                    highlightSelected: true,    //是否高亮选中
+//                    //nodeIcon: 'glyphicon glyphicon-user',    //节点上的图标
+//                    //nodeIcon: 'glyphicon glyphicon-globe',
+//                    emptyIcon: '',    //没有子节点的节点图标
+//                    multiSelect: false,    //多选
+//                    onNodeChecked: function (event, data) {
+//                        toNodeChecked(data.id);
+//                        console.log(data);
+//                    },
+//                    onNodeSelected: function (event, data) {
+//                        toNodeSelected(data.id)
+//                    }
+//                });
+//            },
+//            error: function () {
+//                alert("树形结构加载失败！")
+//            }
+//        });
+//        //加载机构树  -->end
+
+        //加载用户  -->start
+        $('#section-mail-list').load("sys/role-dept-user?roleId=" + roleId);
+
+        //加载用户  -->end
+
+    }
+//    //点击事件
+//    function toNodeChecked(id) {
+//        $('#section-mail-list').load("sys/role-dept-user?roleId=" + roleId + "&deptId=" + id);
+//
+//    }
+//    //选择事件
+//    function toNodeSelected(id) {
+//        $('#section-mail-list').load("sys/role-dept-user?roleId=" + roleId + "&deptId=" + id);
+//
+//    }
+    //执行保存
+    $("#save").click(function () {
+        /* 		var selectedUserIds  =  $('#roleUserListTable') .bootstrapTable('getAllSelections');
+         var length = selectedUserIds.length;
+         var ids = new Array();
+         if (length > 0) {
+         $.each(selectedUserIds, function(index, item) {
+         ids.push(item.id);
+         });
+         } */
+        $.ajax({
+            url: 'sys/role-user-save.json',
+            type: 'post',
+            data: {
+                userIds: overAllIds,
+                preUserIds: roleUsersStr,
+                roleId: roleId
+            },
+            success: function (data, textStatus, jqXHR) {
+//                var deptId = data.deptId;
+                layer.msg('保存成功', {icon: 1});
+                refreshFunction();
+                refreshFunctionUser();
+                //load('sys/role-user-edit?roleId='+roleId);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    });
+    $("#toBack").click(function () {
+        $("#wrapper").load("sys/role-list");
+    });
+    /*]]>*/
+</script>
+

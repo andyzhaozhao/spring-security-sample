@@ -1,0 +1,157 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel ">
+                <div class="panel-heading">
+                    <div style="margin: 9px 0 5px;" class="btn-group">
+                        <button id="add-root-btn" class="btn btn-default" type="button">
+                            添加目录
+                        </button>
+                        <button id="add-btn" class="btn btn-default" type="button">
+                            添加子菜单
+                        </button>
+                        <button id="remove-btn" class="btn btn-default" type="button">删除菜单</button>
+                    </div>
+                    <input id="editName" type="hidden" class="form-control"/>
+                    <input id="editId" type="hidden" class="form-control"/>
+                </div>
+                <div class="panel-body right_centent">
+                    <div id="left-tree"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel " id="menuModal"></div>
+        </div>
+    </div>
+</div>
+<div>
+
+</div>
+
+<script th:inline="javascript" type="text/javascript">
+    /*<![CDATA[*/
+    $(function () {
+        onLoad();
+    });
+    //页面加载，树开始
+    function onLoad() {
+        // 渲染树
+        getTree(function(treeData){
+            $('#left-tree').treeview({
+                data: treeData,
+                levels: 2,
+                onNodeSelected: function (event, node) {
+                    $('#editName').val(node.text);
+                    $('#editId').val(node.id);
+                    $('#menuModal').load('sys/menu-edit?id=' + node.id);
+                },
+                showCheckbox: false //是否显示多选
+            });
+            //默认选中
+            var nodeId = treeData[0].text;
+            var selectableNodes = $('#left-tree').treeview('search', [treeData[0].text, {
+                ignoreCase: false,
+                exactMatch: false
+            }]);
+            $('#left-tree').treeview('selectNode', [selectableNodes, {silent: $('#chk-select-silent').is(':checked')}]);
+        })
+    }
+
+    //添加
+    $("#add-btn").click(function () {
+        var node = $('#left-tree').treeview('getSelected');
+        if (node.length == 0) {
+            $.showMsgText('请选择节点');
+            return;
+        }
+        var editName = $('#editName').val();
+        var editId = $('#editId').val();
+        $('#menuModal').load('sys/menu-add?parentId=' + editId + "&parentName=" + editName);
+
+    });
+
+    // 添加目录菜单
+    $("#add-root-btn").click(function () {
+        $('#menuModal').load('sys/menu-add');
+    });
+
+    // 删除菜单
+    $("#remove-btn").click(function () {
+        var node = $('#left-tree').treeview('getSelected');
+        if (node.length == 0) {
+            $.showMsgText('请选择节点');
+            return;
+        }
+        BootstrapDialog.confirm({
+            title: '提示',
+            message: '确定删除此节点?',
+            size: BootstrapDialog.SIZE_SMALL,
+            type: BootstrapDialog.TYPE_DEFAULT,
+            closable: true,
+            btnCancelLabel: '取消',
+            btnOKLabel: '确定',
+            callback: function (result) {
+                if (result) {
+                    del();
+                }
+            }
+        });
+
+        function del() {
+            var id = $('#editId').val();
+            var jsonSelectedIDs = new Array();
+            jsonSelectedIDs.push({
+                'id': id
+            });
+            var models = JSON.stringify(jsonSelectedIDs);
+            $.ajax({
+                url: 'sys/menu-delete.json',
+                data: 'models=' + models,
+                type: 'post',
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error)
+                        layer.msg(data.error, {
+                            icon: 2
+                        });
+                    else {
+                        var node = $('#left-tree').treeview('getSelected');
+                        $('#left-tree').treeview('removeNode', [node, {
+                            silent: true
+                        }]);
+                        layer.msg('删除菜单成功', {
+                            icon: 1
+                        });
+                    }
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+    });
+
+    // 获取菜单数据，返回树格式的JSON
+    function getTree(onSuccess) {
+        $.ajax({
+            url: "sys/menu-tree.json",
+            dataType: "json",
+            data: {},
+            async: false,
+            type: "POST",
+            success: function (result) {
+                var resultDate = new Array();
+                var jsonArray = result.obj;
+                if (jsonArray != null && jsonArray.length > 0) {
+                    var treeData = walk(jsonArray, resultDate);
+                    onSuccess(treeData);
+                }
+            },
+            error: function (result) {
+                return null;
+            }
+        });
+    }
+
+   /*]]>*/
+</script>

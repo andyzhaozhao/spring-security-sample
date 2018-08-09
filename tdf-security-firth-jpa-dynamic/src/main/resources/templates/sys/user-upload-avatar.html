@@ -1,0 +1,112 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h4 class="modal-title" id="myModalLabel">用户头像上传</h4>
+		</div>
+		<div class="modal-body">
+			<section class="panel">
+				<div class="panel-body">
+					<form role="form" id="avatarFileForm" enctype="multipart/form-data">
+						<div class="form-group">
+							<div class="col-md-12">
+								<div class="fileupload fileupload-new"
+									data-provides="fileupload">
+									<div class="form-group">
+										<div class="col-lg-10">
+											<div class="kv-avatar">
+												<div class="file-loading">
+													<input id="file" name="file" type="file" />
+												</div>
+											</div>
+											<div id="kv-avatar-errors-1" class="center-block"
+												style="display: none"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+
+		</div>
+		<div class="modal-footer">
+			<button id="reset" type="button" class="btn btn-default"
+				data-dismiss="modal">关闭</button>
+			<button id="saveButton" type="button" class="btn btn-primary">提交</button>
+		</div>
+	</div>
+</div>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	
+    var loginName = [[${userDto.loginName}]];
+    var image = '<img src="/images/default.jpg" style="width: 200px; height: 200px;" alt="图片摘要">';   
+    var avatar = [[${userDto.avatar}]];
+    var url='files/'+avatar;
+    if(avatar!=null){
+        image = '<img src='+url+  '  style="width: 200px; height: 200px;" />';
+    } 
+    $("#file").fileinput({
+    	overwriteInitial: true,
+        maxFileSize: 1500,
+        language: 'zh', 
+        showClose: false,
+        showCaption: false,
+        browseLabel: '',
+        removeLabel: '',
+        browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+        removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+        removeTitle: 'Cancel or reset changes',
+        elErrorContainer: '#kv-avatar-errors-1',
+        msgErrorClass: 'alert alert-block alert-danger',
+        defaultPreviewContent: image,
+        layoutTemplates: {main2: '{preview} {remove} {browse}'},
+        allowedFileExtensions: ["jpg", "png", "gif"]
+    });
+
+	$('#saveButton').click(
+			function() {
+				var flag = $('#avatarFileForm').bootstrapValidator('validate').data('bootstrapValidator')
+				.isValid();
+                //校验
+				if(flag){
+					$.ajax({
+					    url: 'sys/user-upload-avatar.json?loginName='+loginName,
+					    type: "POST",
+					    data: new FormData($("#avatarFileForm")[0]),
+					    enctype: 'multipart/form-data',
+					    processData: false,
+					    contentType: false,
+					    cache: false,
+					    success: function (result) {
+					    	console.log(result);
+					    	 var msg = result.ajaxResultJson.msg;
+					         if(result.ajaxResultJson.success){
+					        	  //成功时退出对话框
+					        	 $('#Modal').modal('hide');
+					       	  	refreshFunction();
+					    	  }else{
+					    		  
+					    	  }
+					         layer.msg(msg); 
+					         
+					    },
+					    error: function (result) {
+					    	 var msg = result.ajaxResultJson.msg;
+					    	 layer.msg(msg); 
+					    	
+					    }
+					  });
+				
+				}else{
+					layer.msg("请按格式要求上传！");
+				}
+
+  });
+	
+	/*]]>*/
+</script>

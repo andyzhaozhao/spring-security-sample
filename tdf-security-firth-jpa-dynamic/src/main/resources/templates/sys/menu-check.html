@@ -1,0 +1,138 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">分配角色菜单</h4>
+        </div>
+        <div class="panel">
+            <div class="panel-body">
+                <div id="treeDemoMenu"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="reset" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button id="saveRoleMenu" type="button" class="btn btn-primary">提交</button>
+            <span id="tip"> </span>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript" xmlns:th="http://www.thymeleaf.org">
+    /*<![CDATA[*/
+    var roleId = "";
+    var selectedMenus = "";
+    $(document).ready(function () {
+        roleId = [[${roleId}]];
+        display_result();
+
+    });
+
+    function display_result() {
+        $.ajax({
+            url: "sys/role-menu-tree?roleId=" + roleId,
+            dataType: "json",
+            data: {},
+            type: "POST",
+            success: function (result) {
+                var data = result.obj.menuTree;
+                selectedMenus = result.obj.selectedMenus;
+
+                $('#treeDemoMenu').treeview({
+                    data: data,         // 数据源
+                    showCheckbox: true,   //是否显示复选框
+                    highlightSelected: true,    //是否高亮选中
+                    color: "#000000",
+                    backColor: "#FFFFFF",
+                    //nodeIcon: 'glyphicon glyphicon-user',//节点上的图标
+                    //nodeIcon: 'glyphicon glyphicon-globe',
+                    emptyIcon: '',    //没有子节点的节点图标
+                    multiSelect: true,   //多选
+                    onNodeChecked: function (event, node) { //选中节点
+                        var selectNodes = getChildNodeIdArr(node); //获取所有子节点
+                        if (selectNodes) { //子节点不为空，则选中所有子节点
+                            $('#treeDemoMenu').treeview('checkNode', [selectNodes, {silent: true}]);
+                        }
+                        var parentNode = $("#treeDemoMenu").treeview("getNode", node.parentId);
+                        setParentNodeCheck(node);
+                    },
+                    onNodeUnchecked: function (event, node) { //取消选中节点
+                        var selectNodes = getChildNodeIdArr(node); //获取所有子节点
+                        if (selectNodes) { //子节点不为空，则取消选中所有子节点
+                            $('#treeDemoMenu').treeview('uncheckNode', [selectNodes, {silent: true}]);
+                        }
+                    }
+                });
+                $('#treeDemoMenu').treeview('collapseAll', {silent: false});
+            },
+            error: function (result) {
+            }
+        });
+    }
+
+    //获取所有子节点
+    function getChildNodeIdArr(node) {
+        var ts = [];
+        if (node.nodes) {
+            for (x in node.nodes) {
+                ts.push(node.nodes[x].nodeId);
+                if (node.nodes[x].nodes) {
+                    var getNodeDieDai = getChildNodeIdArr(node.nodes[x]);
+                    for (j in getNodeDieDai) {
+                        ts.push(getNodeDieDai[j]);
+                    }
+                }
+            }
+        } else {
+            ts.push(node.nodeId);
+        }
+        return ts;
+    }
+
+    // 选中所有子节点时，选中父节点 取消子节点时取消父节点
+    function setParentNodeCheck(node) {
+        var parentNode = $("#treeDemoMenu").treeview("getNode", node.parentId);
+        if (parentNode.nodes) {
+            var checkedCount = 0;
+            for (x in parentNode.nodes) {
+                if (parentNode.nodes[x].state.checked) {
+                    checkedCount++;
+                } else {
+                    break;
+                }
+            }
+            if (checkedCount == parentNode.nodes.length) {
+                $("#treeDemoMenu").treeview("checkNode", parentNode.nodeId);
+                setParentNodeCheck(parentNode);
+            }
+        }
+    }
+
+    //执行保存
+    $("#saveRoleMenu").click(function () {
+        var selectedUserIds = $('#treeDemoMenu').treeview('getChecked');
+        var length = selectedUserIds.length;
+        var ids = new Array();
+        if (length > 0) {
+            $.each(selectedUserIds, function (index, item) {
+                ids.push(item.id);
+            });
+        }
+
+        $.ajax({
+            url: 'sys/role-menu-save',
+            type: 'post',
+            data: {
+                menuIds: ids,
+                preMenuIds: selectedMenus,
+                roleId: roleId
+            },
+            success: function (data, textStatus, jqXHR) {
+                $('#Modal_menu').modal('hide');
+                display_result();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    });
+    /*]]>*/
+</script>

@@ -1,0 +1,218 @@
+<div class="modal-dialog  modal-lg">
+	<div class="modal-content ">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h4 class="modal-title" id="myModalLabel">个人设置</h4>
+		</div>
+		<div class="modal-body ">
+			<div class="row">
+				<form id="form-wizard" enctype="multipart/form-data"
+					name="form-wizard" class="form-horizontal" th:object="${userDto}">
+
+					<input type="hidden" name="id" th:value="${userDto.id}"
+						readonly="readonly" /> <input type="hidden" name="flag"
+						th:value="${userDto.flag}" readonly="readonly" /> <input
+						type="hidden" name="token" th:value="${userDto.token}"
+						readonly="readonly" /> <input type="hidden" name="avatar"
+						th:value="${userDto.avatar}" readonly="readonly" /> <input
+						type="hidden" name="password" th:value="${userDto.password}"
+						readonly="readonly" /> <input type="hidden" name="userName"
+						th:value="${userDto.userName}" readonly="readonly" /> <input
+						type="hidden" name="email" th:value="${userDto.email}"
+						readonly="readonly" /> <input type="hidden" name="gender"
+						th:value="${userDto.gender}" readonly="readonly" /> <input
+						type="hidden" name="idNumber" th:value="${userDto.idNumber}"
+						readonly="readonly" /> <input type="hidden" name="birthday"
+						th:value="${userDto.birthday}" readonly="readonly" /> <input
+						type="hidden" name="tag" th:value="${userDto.tag}"
+						readonly="readonly" /> <input type="hidden" name="phoneNum"
+						th:value="${userDto.phoneNum}" readonly="readonly" /> <input
+						type="hidden" name="blog" th:value="${userDto.blog}"
+						readonly="readonly" /> <input type="hidden" name="integral"
+						th:value="${userDto.integral}" readonly="readonly" /> <input
+						type="hidden" name="state" th:value="${userDto.state}"
+						readonly="readonly" />
+
+
+					<div class="col-md-12">
+						
+							<div class="col-md-4">
+								<div class="kv-avatar" >
+									<div class="file-loading">
+										<input id="file" name="file" type="file" />
+									</div>
+								</div>
+								<div id="kv-avatar-errors-1" class="center-block"
+									style="display: none"></div>
+							</div>
+							<!-- 头像 -->
+							<div class="col-md-8">
+							
+							<div class="panel">
+									<div class="panel-body">
+									
+									     <div class="col-md-12" >
+									          <div class="col-md-3" ><div class="title">角色</div></div>
+									          
+									          <div class="col-md-9" >
+									             <div th:each="role: ${userDto.roles}">
+													  <div class="desk" th:text="${role.roleName}"> </div>
+												  </div>
+											  </div>
+									      </div>
+									
+									     <div class="col-md-12" style="margin-top:5px;" >
+									          <div class="col-md-3" ><div class="title">昵称</div></div>
+									          <div class="col-md-9" >
+									             <div class="desk">
+													<input class="form-control" id="nickname" type="text"
+														name="nickname" th:value="${userDto.nickname}" />
+												</div>
+											  </div>
+									      </div>
+									
+									   <div class="col-md-12" style="margin-top:5px;">
+									          <div class="col-md-3" ><div class="title">登录名</div></div>
+									          <div class="col-md-9" >
+									             <div class="desk">
+													<input class="form-control required" id="loginName"
+														type="text" name="loginName"
+														th:value="${userDto.loginName}" />
+												</div>
+											  </div>
+									   </div> 
+									   
+									   <!-- <div class="col-md-12" style="margin-top:5px;">
+									          <div class="col-md-3" ><div class="title">居住地</div></div>
+									          <div class="col-md-9" >
+									             <div class="desk"><textarea class="form-control" id="address"
+									              	th:text="${userDto.address}" name="address"></textarea></div>
+											  </div>
+									   </div> 
+									    -->
+									   <div class="col-md-12" style="margin-top:5px;">
+									          <div class="col-md-3" ><div class="title">个人简介</div></div>
+									          <div class="col-md-9" >
+									            
+													<div class="desk">
+													<textarea rows="5" class="form-control" id="remark"
+														th:text="${userDto.remark}" name="remark"></textarea>
+												</div>
+												
+											  </div>
+									   </div>   
+									
+									
+									</div>
+								</div>
+								
+				
+							</div>
+						
+						
+						
+					</div>
+
+					
+
+				</form>
+
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button id="reset" type="button" class="btn btn-default"
+				data-dismiss="modal">关闭</button>
+			<button id="saveButton" type="button" class="btn btn-primary">提交</button>
+		</div>
+	</div>
+</div>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$(function() {
+	//表单校验
+
+
+	
+
+		   //图片摘要 默认
+		var image = '<img src="/images/default.jpg" style="width: 200px; height: 200px;" alt="图片摘要">';   
+		var avatar = [[${userDto.avatar}]];
+
+		var url='files/'+avatar;
+		if(avatar!=null){
+		    image = '<img src='+url+' style="width: 200px; height: 200px;" />';
+		} 
+		
+		
+		$("#file").fileinput({
+			overwriteInitial: true,
+		    maxFileSize: 1500,
+		    language: 'zh', 
+		    showClose: false,
+		    showCaption: false,
+		    browseLabel: '',
+		    removeLabel: '',
+		    browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+		    removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+		    removeTitle: 'Cancel or reset changes',
+		    elErrorContainer: '#kv-avatar-errors-1',
+		    msgErrorClass: 'alert alert-block alert-danger',
+		    defaultPreviewContent: image,
+		    layoutTemplates: {main2: '{preview} {remove} {browse}'},
+		    allowedFileExtensions: ["jpg", "png", "gif"]
+		});
+
+	});
+
+
+	//提交按钮,所有验证通过方可提交
+	$("#saveButton").click(
+			function() {
+				var flag = $('#form-wizard').bootstrapValidator('validate')
+						.data('bootstrapValidator').isValid();
+				if (flag) {
+					var str = $('#form-wizard').serializeObject();
+					    //序列化的基础参数 
+					var baseData = JSON.stringify(str);
+					var form = $('#form-wizard')[0];
+					var data = new FormData(form);
+					    data.append("models",baseData)
+					 
+					//异步
+					$.ajax({
+						   type: "POST",
+						   enctype: 'multipart/form-data',
+						   url: "sys/user-save.json",
+						   data: data,
+						   processData: false, 
+					        contentType: false,
+					        cache: false,
+						    success: function(result){
+						    	//如果保存不成功的提示 原因
+								if (!result.success) {
+									var warn = result.msg;
+									if (warn != null) {
+										//自行处理
+										//layer.msg(result.msg);
+										return;
+									}
+								} else {
+									$('#userSetModal').modal('hide');
+									
+								}
+								//layer.msg(result.msg);
+						    	}
+						    });
+				
+				}
+
+			});
+
+
+
+	/*]]>*/
+</script>
+

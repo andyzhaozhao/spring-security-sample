@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="_csrf_parameter" th:content="${_csrf.parameterName}"
+          th:if="${_csrf}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"
+          th:if="${_csrf}"/>
+    <meta name="_csrf" th:content="${_csrf.token}" th:if="${_csrf}"/>
+    <title>太极开源平台403</title>
+</head>
+<body>
+<div id="content" style="background: #fff;">
+    <div id="content-header">
+        <h1>提示信息</h1>
+    </div>
+    <div id="breadcrumb">
+        <a href="index.html" title="Go to Home" class="tip-bottom"><i
+                class="icon-home"></i> 首页</a> <a href="#" class="current">报错提示<a
+            th:if="${#authentication.name}!=null" th:href="logout">注销</a> <a
+            th:if="${#authentication.name}==null" th:href="login.html">登录</a></a>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="err-main">
+                    <div class="err-cont">
+                        <img src="theme/img/icon_error.png" class="err-img"/>
+                        <div class="error_ex error-qx">
+                            <h3 th:text="${message}">Fake conten</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+/*! layer官方演示页面样式 */
+.clearfix {
+    clear: both;
+    zoom: 1;
+}
+.layer-area {
+    margin: 10px 20px;
+}
+
+.layui-btn {
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 18px;
+    background-color: #009688;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    opacity: .9;
+    filter: alpha(opacity=90);
+    outline: 0;
+}
+.layui-btn-primary {
+    border: 1px solid #C9C9C9;
+    background-color: #fff;
+    color: #555;
+}
+.lay-po{
+	padding:20px;
+	height:560px;
+	overflow: hidden;
+}
+.lf-div{
+	width:30%;
+	height:100%;
+	float:left;
+	border-right:solid 1px #ccc;
+	overflow: auto;
+
+}
+.rf-div{
+	width:69%;
+	height:100%;
+	float:right;
+	overflow: auto;
+}

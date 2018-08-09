@@ -1,0 +1,68 @@
+<script th:inline="javascript" xmlns:th="http://www.thymeleaf.org">
+/*<![CDATA[*/
+    $(function(){
+    	$("#menuPic").kendoUpload({
+			async:{
+				saveUrl : "menu-pic-upload"
+			},
+			multiple : false,
+			showFileList: false,
+			upload : onUpload,
+			success: onSuccess,
+			localization: {
+	            headerStatusUploading: "正在上传...",
+	            headerStatusUploaded: "已上传",
+	            statusFailed: "上传失败"
+	        }
+		});
+    });
+    
+    //上传图片前
+    function onUpload(e)
+    {
+        var files = e.files;
+        $.each(files, function () {
+//             if (!(this.extension.toLowerCase() == ".jpg" || this.extension.toLowerCase() == ".jpeg" || this.extension.toLowerCase() == ".png"))
+//             {
+//                 alert("抱歉，不支持的图片格式！")
+//                 e.preventDefault();
+//             }
+            if (this.size>10485760)
+            {
+                alert("文件大小不能超过10M！")
+                e.preventDefault();
+                return;
+            }
+        });
+        e.data={
+        		menuId: menuId
+        }
+    }
+
+    //上传成功后
+    function onSuccess(e)
+    {
+       var files = e.files;
+       if (e.operation == "upload") 
+       {
+	  	   if(e.response)
+		   {
+		     if(e.response.success)
+		    	 {
+		    	     alert(e.response.msg);
+		    	     picDialog.close();
+		    	 }
+		   }
+      }
+    }
+/*]]>*/
+</script>
+<table>
+	<tr>
+		<td width="100px">上传图片：</td>
+		<td><input name="menuPicFile" id="menuPic" type="file" /></td>
+	</tr>
+	<tr>
+		<td colspan="2">(提示：仅支持 .jpg、.jpeg或.png的图片格式！)</td>
+	</tr>
+</table>

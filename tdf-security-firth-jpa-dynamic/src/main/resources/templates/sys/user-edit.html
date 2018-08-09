@@ -1,0 +1,468 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header  ">
+            <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">用户相关信息</h4>
+        </div>
+        <div class="modal-body ">
+            <section class="panel">
+                <header class="panel-heading custom-tab ">
+                    <!-- 选项卡定义开始 -->
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#user" data-toggle="tab"> 基础信息</a>
+                        </li>
+                        <li><a href="#avar" data-toggle="tab">肖像信息</a></li>
+                        <li th:if="${not #lists.isEmpty(userDto.roles)}"><a href="#role" data-toggle="tab">所属机构角色</a>
+                        </li>
+                    </ul>
+
+                </header>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="row">
+                            <form id="form-wizard" enctype="multipart/form-data"
+                                  name="form-wizard" class="form-horizontal" th:object="${userDto}">
+                                <input type="hidden" name="id" th:value="${userDto.id}"
+                                       readonly="readonly"/> <input id="flag" type="hidden" name="flag"
+                                                                    th:value="${userDto.flag}" readonly="readonly"/>
+                                <input
+                                        id="token" type="hidden" name="token" th:value="${userDto.token}"
+                                        readonly="readonly"/> <input id="avatar" type="hidden"
+                                                                     name="avatar" th:value="${userDto.avatar}"
+                                                                     readonly="readonly"/>
+                                <input type="hidden" name="password" th:value="${userDto.password}"
+                                       readonly="readonly"/>
+
+                                <!-- 选项卡内容填充 -->
+                                <div id="myTabContent" class="tab-content">
+                                    <div class="tab-pane fade in active" id="user">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 col-sm-2 control-label">排序码</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control" id="userIndex" type="number"
+                                                               name="userIndex" min="0" max="100"
+                                                               th:value="${userDto.userIndex==null? 1:(userDto.userIndex)}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 col-sm-2 control-label">用户名/登录名</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control required" id="loginName"
+                                                               required="required"
+                                                               type="text" name="loginName"
+                                                               placeholder="请输入登录名称长度需在6~20之间"
+                                                               th:value="${userDto.loginName}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4  control-label">真实姓名</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control required" id="userName"
+                                                               required="required"
+                                                               type="text" name="userName" placeholder="请输入真实姓名"
+                                                               th:value="${userDto.userName}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 col-sm-2 control-label">昵称</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control" id="nickname" type="text"
+                                                               name="nickname" placeholder="昵称"
+                                                               th:value="${userDto.nickname}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 col-sm-2 control-label">邮箱地址</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control" id="email" type="text"
+                                                               name="email" placeholder="email@example.com"
+                                                               th:value="${userDto.email}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label">性别 </label>
+                                                    <div class="col-lg-8">
+                                                        <select name="gender" onchange="" class="form-control">
+                                                            <option value=""></option>
+                                                            <option value="1" th:selected="${userDto.gender eq '1'}">男
+                                                            </option>
+                                                            <option value="2" th:selected="${userDto.gender eq '2'}">女
+                                                            </option>
+                                                            <option value="0" th:selected="${userDto.gender eq '0'}">
+                                                                其他
+                                                            </option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label">手机</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control" id="phoneNum"
+                                                               th:value="${userDto.phoneNum}" name="phoneNum"></input>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label">出生日期</label>
+                                                    <div class="col-lg-8">
+
+                                                        <input size="16" type="text" value="2012-06-15 14:45"
+                                                               readonly="readonly" name="birthday"
+                                                               class="form_datetime form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label">居住地</label>
+                                                    <div class="col-lg-8">
+											<textarea class="form-control" id="address"
+                                                      th:text="${userDto.address}" name="address"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label">标签</label>
+                                                    <div class="col-lg-8">
+											<textarea class="form-control" id="tag"
+                                                      th:text="${userDto.tag}" name="tag"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label">身份证号</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control" id="idNumber" type="text"
+                                                               name="idNumber" placeholder="身份证号"
+                                                               th:value="${userDto.idNumber}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label">个人简介</label>
+                                                    <div class="col-lg-8">
+											<textarea class="form-control" id="remark"
+                                                      th:text="${userDto.remark}" name="remark"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label">博客</label>
+                                                    <div class="col-lg-8">
+
+                                                        <input class="form-control" id="blog" type="text" name="blog"
+                                                               placeholder="博客地址" th:value="${userDto.blog}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label">积分 </label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control" id="integral" type="number"
+                                                               name="integral" placeholder="积分" min="0"
+                                                               th:value="${userDto.integral}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4  control-label">状态 </label>
+                                                    <div class="col-lg-8" th:if="${userDto.id}==null">
+                                                        <input type="radio" name="state" value="0" th:checked="false">未激活</input>
+                                                        <input type="radio" name="state" value="1"
+                                                               th:checked="true">已激活</input>
+                                                    </div>
+                                                    <div class="col-lg-8" th:if="${userDto.id}!=null">
+                                                        <input type="radio" name="state" value="0"
+                                                               th:checked="${userDto.state}== 0? true:false">未激活</input>
+                                                        <input
+                                                                type="radio" name="state" value="1"
+                                                                th:checked="${userDto.state}== 1? true:false">已激活</input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="menu">
+                                        <p>我这里是menu选项卡显现的</p>
+                                    </div>
+                                    <div class="tab-pane fade" id="role">
+                                        <div id="content" class="row-fluid">
+                                            <!--<div class="col-md-6">-->
+                                            <!--<div class="panel panel-info">-->
+                                            <!--<div class="panel-heading">-->
+                                            <!--<h3 class="panel-title">用户所属机构</h3>-->
+                                            <!--</div>-->
+                                            <!--<div class="panel-body">-->
+                                            <!--<table class="table">-->
+                                            <!--<th>机构名称</th>-->
+                                            <!--<th>父级机构</th>-->
+                                            <!--<tr th:each="dept:${userDto.depts}">-->
+                                            <!--<td th:text="${dept.deptName}">产品 A</td>-->
+                                            <!--<td th:text="${dept.parentName}">产品 A</td>-->
+                                            <!--</tr>-->
+                                            <!--</table>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                            <div class="col-md-6">
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">
+                                                        <h3 class="panel-title">用户所属角色</h3>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <table class="table">
+                                                            <th>角色标识</th>
+                                                            <th>角色描述</th>
+                                                            <tr th:each="role:${userDto.roles}">
+                                                                <td th:text="${role.roleName}">产品 A</td>
+                                                                <td th:text="${role.roleDesc}">产品 A</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="avar">
+                                        <div class="form-group">
+                                            <div class="col-lg-10">
+                                                <div class="kv-avatar">
+                                                    <div class="file-loading">
+                                                        <input id="file" name="file" type="file"/>
+                                                    </div>
+                                                </div>
+                                                <div id="kv-avatar-errors-1" class="center-block"
+                                                     style="display: none"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="modal-footer">
+            <button id="reset" type="button" class="btn btn-default"
+                    data-dismiss="modal">关闭
+            </button>
+            <button id="saveButton" type="button" class="btn btn-primary">提交</button>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        $('input[required]').after('<span  class="muted">*</span>');
+
+        //表单校验
+        $('#form-wizard').bootstrapValidator({
+            //		        live: 'disabled',
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                userIndex: {
+                    validators: {
+                        notEmpty: {
+                            message: '序号必填'
+                        },
+                        lessThan: {
+                            value: 100,
+                            inclusive: true,
+                            message: '序号最大100'
+                        }
+                    }
+                },
+                loginName: {
+                    validators: {
+                        notEmpty: {
+                            message: '登录名必填'
+                        },
+                        stringLength: {
+                            min: 5,
+                            max: 20,
+                            message: '登录名长度必须5-20字符'
+                        },
+                        regexp: {
+                            regexp: /^[_a-zA-Z0-9-]+$/,
+                            message: '不能输入中文和特殊字符'
+                        }
+                    }
+                },
+                userName: {
+                    validators: {
+                        notEmpty: {
+                            message: '真实姓名必填'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 60,
+                            message: '真实姓名为1-30字符'
+                        },
+                        regexp: {
+                            regexp: /^[\u4e00-\u9fa5a-zA-Z·]+$/,
+                            message: '不能输入数字和特殊字符'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        emailAddress: {
+                            message: '邮箱不正确'
+                        }
+                    }
+                },
+                phoneNum: {
+                    validators: {
+                        stringLength: {
+                            min: 11,
+                            max: 11,
+                            message: '手机号为11位'
+                        },
+                        regexp: {
+                            regexp: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
+                            message: '手机号不正确'
+                        }
+                    }
+                },
+                file: {
+                    validators: {
+                        /* notEmpty: {
+                         message: '上传图片不能为空'
+                         }, */
+                        file: {
+                            extension: 'png,jpg,jpeg',
+                            type: 'image/png,image/jpg,image/jpeg',
+                            message: '图片格式仅支持png,jpg,jpeg'
+                        }
+                    }
+                }
+            }
+        });
+
+        //提交按钮,所有验证通过方可提交
+        $("#saveButton").click(
+                function () {
+                    var flag = $('#form-wizard').bootstrapValidator('validate')
+                            .data('bootstrapValidator').isValid();
+                    if (flag) {
+                        var str = $('#form-wizard').serializeObject();
+                        //序列化的基础参数
+                        var baseData = JSON.stringify(str);
+                        var form = $('#form-wizard')[0];
+                        var data = new FormData(form);
+                        data.append("models", baseData)
+                        //异步
+                        $.ajax({
+                            type: "POST",
+                            enctype: 'multipart/form-data',
+                            url: "sys/user-save.json",
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            success: function (result) {
+                                //如果保存不成功的提示 原因
+                                if (!result.success) {
+                                    var warn = result.msg;
+                                    if (warn != null) {
+                                        //自行处理
+                                        layer.msg(result.msg);
+                                        return;
+                                    }
+                                } else {
+                                    $('#Modal').modal('hide');
+                                    refreshFunction();
+                                }
+
+                                layer.msg(result.msg);
+                            }
+                        });
+
+                    }
+
+                });
+
+    });
+    //图片摘要 默认
+    var image = '<img src="/images/default.jpg" style="width: 200px; height: 200px;" alt="图片摘要">';
+    var avatar = [[${userDto.avatar}]];
+    var url = 'files/' + avatar;
+    if (avatar != null) {
+        image = '<img src=' + url + '  style="width: 200px; height: 200px;" />';
+    }
+    $("#file").fileinput({
+        overwriteInitial: true,
+        maxFileSize: 1500,
+        language: 'zh',
+        showClose: false,
+        showCaption: false,
+        browseLabel: '',
+        removeLabel: '',
+        browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+        removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+        removeTitle: 'Cancel or reset changes',
+        elErrorContainer: '#kv-avatar-errors-1',
+        msgErrorClass: 'alert alert-block alert-danger',
+        defaultPreviewContent: image,
+        layoutTemplates: {main2: '{preview} {remove} {browse}'},
+        allowedFileExtensions: ["jpg", "png", "gif"]
+    });
+
+    //时间控件
+    $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii', language: 'zh-CN',});
+    /*]]>*/
+</script>
