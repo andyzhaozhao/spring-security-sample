@@ -1,0 +1,273 @@
+<section class="jumbotron text-center">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<p>申请填写说明：请先选择申请接入的应用类型</p>
+			<!-- 这是表单的作用是去加载不同的页面 -->
+		</div>
+		<div class="panel-body">
+		    <div class="col-lg-2"></div>
+		    <div class="col-lg-8">
+			<form id="form-wizard" enctype="multipart/form-data"
+				name="form-wizard" class="form-horizontal"
+				th:object=" ${OauthClientDetailsDTO}">
+				<div class="form-group">
+					<label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">应用类型</label>
+					<div class="col-lg-5">
+						<select class="form-control m-bot10" id="authorizedGrantTypes"
+							name="authorizedGrantTypes">
+							<option value="authorization_code">Web应用</option>
+							<option value="password">移动应用</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group">
+
+					<input id="resourceIds" type="hidden" name="resourceIds"
+						th:value="${OauthClientDetailsDTO.resourceIds}" /> <input
+						id="scope" type="hidden" name="scope"
+						th:value="${OauthClientDetailsDTO.scope}" /> <input id="flag"
+						type="hidden" name="flag" th:value="${OauthClientDetailsDTO.flag}" />
+					<!-- <input id="authorizedGrantTypes" type="hidden"
+						name="authorizedGrantTypes"
+						th:value="${OauthClientDetailsDTO.authorizedGrantTypes}" /> -->
+						<input
+						id="authorities" type="hidden" name="authorities"
+						th:value="${OauthClientDetailsDTO.authorities}" /> <input
+						id="accessTokenValidity" type="hidden" name="accessTokenValidity"
+						th:value="${OauthClientDetailsDTO.accessTokenValidity}" /> <input
+						id="refreshTokenValidity" onfocus="this.blur();" type="hidden"
+						name="refreshTokenValidity"
+						th:value="${OauthClientDetailsDTO.refreshTokenValidity}" /> <input
+						id="additionalInformation" type="hidden"
+						name="additionalInformation"
+						th:value="${OauthClientDetailsDTO.additionalInformation}" />
+					<div class="form-group ">
+						<label class="control-label col-lg-3">应用名称<span
+							class="muted">*</span></label>
+						<div class="col-lg-5">
+							<input id="autoapprove" type="text" name="autoapprove"
+								placeholder="应用名称"
+								th:value="${OauthClientDetailsDTO.autoapprove}"
+								class="form-control" /> <label for="autoapprove" class="error"
+								style="display: none;">This field is required.</label>
+						</div>
+					</div>
+
+					<div class="form-group ">
+						<label class="control-label col-lg-3"> clientId<span
+							class="muted">*</span></label>
+						<div class="col-lg-5">
+							<input id="clientId" type="text" name="clientId"
+								placeholder="请输入客户端id"
+								th:value="${OauthClientDetailsDTO.clientId}"
+								class="form-control" />
+						</div>
+					</div>
+
+
+					<div class="form-group ">
+						<label class="control-label col-lg-3">clientSecret<span
+							class="muted">*</span></label>
+						<div class="col-lg-5">
+							<input id="clientSecret" type="text" name="clientSecret"
+								placeholder="请输入客户秘钥"
+								th:value="${OauthClientDetailsDTO.clientSecret}"
+								class="form-control" /> <label for="clientSecret" class="error"
+								style="display: none;">This field is required.</label>
+						</div>
+					</div>
+
+
+					<div class="form-group ">
+						<label class="control-label col-lg-3">回调地址<span
+							class="muted">*</span></label>
+						<div class="col-lg-5">
+							<input id="webServerRedirectUri" type="text"
+								name="webServerRedirectUri" placeholder="回调地址"
+								th:value="${OauthClientDetailsDTO.webServerRedirectUri}"
+								class="form-control" /> <label for="webServerRedirectUri"
+								class="error" style="display: none;">This field is
+								required.</label>
+						</div>
+					</div>
+					
+					<div class="form-group ">
+						<label class="control-label col-lg-3">应用描述<span
+							class="muted">*</span></label>
+						<div class="col-lg-5">
+						    <textarea class="form-control" 
+						    name="additionalInformation"
+							id="additionalInformation" 
+							placeholder="应用描述" 
+							th:text="${OauthClientDetailsDTO.additionalInformation}"></textarea>
+							
+							 <label for="webServerRedirectUri"
+								class="error" style="display: none;">This field is
+								required.</label>
+							
+						</div>
+					</div>
+					
+					 <div class="form-group">
+                                    <label class="control-label col-md-3">应用图片</label>
+                                      <div class="col-md-9">
+                                      <p>请上传应用高清图片 108*108像素，仅支持PNG格式，大小不超过300KB</p>
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                                            </div>
+                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                            <div>
+                                                   <span class="btn btn-default btn-file">
+                                                   <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
+                                                   <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                   <input type="file" class="default" />
+                                                   </span>
+                                                <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        
+                                    </div>
+                     </div>
+				</div>
+			</form>	
+			</div>
+			<div class="col-lg-2"></div>
+		</div>
+
+		
+		<div class="panel-footer">
+			<button type="button" class="btn btn-success" id='saveButton'
+				data-dismiss="modal">提交申请</button>
+			<button type="button" class="btn btn-default" id="cancelButton">取消</button>
+		</div>
+	</div>
+</section>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$(function() {
+		
+		$(".muted").css({"background-color":"#FF0000"});
+		
+		$('#form-wizard')
+				.bootstrapValidator(
+						{
+							message : 'This value is not valid',
+							feedbackIcons : {
+								valid : '',
+								invalid : '',
+								validating : ''
+							},
+							fields : {
+
+								clientSecret : {
+									validators : {
+										notEmpty : {
+											message : 'Secret必填'
+										},
+										stringLength : {
+											min : 2,
+											max : 200,
+											message : 'Secret长度必须2-200字符'
+										},
+										regexp : {
+											regexp : /^[a-zA-Z0-9·]+$/,
+											message : '不能输入汉字和特殊字符'
+										}
+									}
+								},
+
+								webServerRedirectUri : {
+									validators : {
+										notEmpty : {
+											message : '回调地址'
+										},
+										stringLength : {
+											min : 2,
+											max : 200,
+											message : '回调地址长度必须2-200字符'
+										},
+										regexp : {
+											//晚上合并的
+											regexp : /^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})|(localhost)+(:\d+)*(\/\w+\.\w+)*([\?&]\w+=\w*)*$/,
+											message : '请输入合法的回调地址'
+										}
+									}
+								},
+
+								autoapprove : {
+									validators : {
+										notEmpty : {
+											message : '应用名称'
+										},
+										stringLength : {
+											min : 2,
+											max : 200,
+											message : '应用名称2-20字符'
+										},
+										regexp : {
+											regexp : /^[\u4e00-\u9fa5a-zA-Z·]+$/,
+											message : '不能输入数字和特殊字符'
+										}
+									}
+								},
+								additionalInformation: {
+									validators : {
+										notEmpty : {
+											message : '应用描述'
+										},
+										stringLength : {
+											min : 2,
+											max : 200,
+											message : '应用名称0-200字符'
+										}
+									}
+								}
+
+							}
+						});
+
+		//取消按钮
+		$("#cancelButton").click(function() {
+			window.location.replace("/");
+		});
+		//提交按钮,所有验证通过方可提交
+		$("#saveButton").click(
+				function() {
+
+					var flag = $('#form-wizard').bootstrapValidator('validate')
+							.data('bootstrapValidator').isValid();
+
+					if (flag) {
+						var url = "oauthClientDetailsAdd.json";
+						var id = $('#clientId').val();
+						if (id != '') {
+							url = "oauthClientDetailsUpdate.json";
+						}
+						$.post(url, $('#form-wizard').serialize(), function(
+								result) {
+
+							console.log("result" + result);
+							if (result.error) {
+
+							} else {
+								layer.msg('申请成功', {
+									icon : 1
+								});
+							}
+							window.location.replace("/");
+						});
+					}
+				});
+	});
+
+	/*]]>*/
+</script>
+<!--file upload-->
+<link rel="stylesheet" type="text/css" href="css/bootstrap-fileupload.min.css" />
+<!--file upload-->
+<script type="text/javascript" src="js/bootstrap-fileupload.min.js"></script>
+

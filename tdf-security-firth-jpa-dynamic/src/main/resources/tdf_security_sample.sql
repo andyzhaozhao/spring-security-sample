@@ -11,11 +11,30 @@
  Target Server Version : 50717
  File Encoding         : utf-8
 
- Date: 08/09/2018 17:44:17 PM
+ Date: 08/15/2018 14:31:02 PM
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `clientdetails`
+-- ----------------------------
+DROP TABLE IF EXISTS `clientdetails`;
+CREATE TABLE `clientdetails` (
+  `appId` varchar(128) NOT NULL,
+  `resourceIds` varchar(256) DEFAULT NULL,
+  `appSecret` varchar(256) DEFAULT NULL,
+  `scope` varchar(256) DEFAULT NULL,
+  `grantTypes` varchar(256) DEFAULT NULL,
+  `redirectUrl` varchar(256) DEFAULT NULL,
+  `authorities` varchar(256) DEFAULT NULL,
+  `access_token_validity` int(11) DEFAULT NULL,
+  `refresh_token_validity` int(11) DEFAULT NULL,
+  `additionalInformation` varchar(4096) DEFAULT NULL,
+  `autoApproveScopes` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`appId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `menu`
@@ -48,7 +67,7 @@ CREATE TABLE `menu` (
 --  Records of `menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `menu` VALUES ('3a6de32d5a3c4381b8808afe836c22e9', null, '2018-03-02 16:12:28', '1', null, null, null, null, 'role', null, '1', '角色管理', 'sys/role-list', null, null, '8f13fa7aa1dd40e181568e870a6a2d03'), ('3a7fd63c81304f5c82a7681fd892fdd6', null, '2018-03-02 16:12:29', '0', null, null, null, null, 'log', null, '5', '日志管理', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('67c1bf1eff3444b098dd190865beaf44', null, null, '1', null, '2018-05-09 15:35:43', null, null, 'sys', '', '1', '系统管理', '', '', null, null), ('7094928c2f4740c78ace4cd7bd3e733e', null, '2018-03-02 16:12:27', '0', null, null, null, null, 'deptMsg', null, '2', '部门管理', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('760fc5e46e734250b0fcd1886c4cc02a', null, '2018-03-02 16:12:28', '1', null, null, null, null, 'resource', null, '4', '资源管理', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('828f62c806e6454cbf72bbe70bc227f1', null, '2018-03-02 16:12:27', '0', null, null, null, null, 'org', null, '2', '组织机构', 'sys/dept-user', null, null, '7094928c2f4740c78ace4cd7bd3e733e'), ('8e5f8c6bbd0f42c4bf07fb938ff5196c', null, '2018-03-02 16:12:27', '0', null, null, null, null, 'dept', null, '1', '所有部门', 'sys/dept-list', null, null, '7094928c2f4740c78ace4cd7bd3e733e'), ('8f13fa7aa1dd40e181568e870a6a2d03', null, '2018-03-02 16:12:28', '1', null, null, null, null, 'authority', null, '3', '权限', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('8ff04026290d4866a1db153987eecfb4', null, '2018-07-23 23:38:25', '0', null, '2018-07-23 23:38:25', null, null, '', '', '1', '测试', '', '', null, '67c1bf1eff3444b098dd190865beaf44'), ('968e1dd124c94922bdce2294ecd07fdb', null, '2018-03-02 16:12:26', '1', null, null, null, null, 'user', null, '1', '用户管理', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('97aeb7e88b5d4529a80f07c9ba4d2775', null, '2018-03-02 16:12:27', '0', null, null, null, null, 'disable', null, '1', '已注销机构', 'sys/dept-state', null, null, '7094928c2f4740c78ace4cd7bd3e733e'), ('b09b48cbfd254d0aae5250268e1b73e0', null, '2018-03-02 16:12:26', '1', null, null, null, null, 'diableuser', null, '2', '已注销人员', 'sys/disable-user-list', null, null, '968e1dd124c94922bdce2294ecd07fdb'), ('ba6255a161ef438ba36d1a675ef4480e', null, '2018-05-24 17:09:23', '0', null, '2018-05-24 17:09:23', null, null, '', '', '1', '日志列表', 'webLogsList', '', null, '3a7fd63c81304f5c82a7681fd892fdd6'), ('e26b8a7a87f64133ba15114d05f40ade', null, null, '1', null, '2018-05-09 15:36:54', null, null, 'enableuser', '', '1', '所有人员', 'sys/user-list', '', null, '968e1dd124c94922bdce2294ecd07fdb'), ('f12d9eae0fec46e4816b6baf00ee6ef1', null, '2018-03-02 16:12:28', '1', null, null, null, null, 'menu', null, '1', '菜单管理', 'sys/menu-list', null, null, '760fc5e46e734250b0fcd1886c4cc02a'), ('f2bc9b3362b64276bb3b1d64cef0bd5c', null, null, '0', null, '2018-03-02 17:51:59', null, null, 'singleCode', '', '2', '单级字典', 'dataItem/single-list', '', null, '760fc5e46e734250b0fcd1886c4cc02a'), ('f4e4344330684f0c9b7c14a8d9557603', null, null, '0', null, '2018-03-02 17:52:06', null, null, 'multiCode', '', '3', '多级字典', 'dataItem/multi-list', '', null, '760fc5e46e734250b0fcd1886c4cc02a');
+INSERT INTO `menu` VALUES ('006141059be045189b06265fa49552e8', null, null, '1', null, '2018-08-12 19:01:06', null, null, 'portal', '', '2', 'URL管理', '', '', null, null), ('0312745baa6645a39419474e8117cdd6', null, null, '1', null, '2018-08-12 18:26:58', null, null, '', '', '7', ' menu1', 'https://www.baidu.com/', '', null, '006141059be045189b06265fa49552e8'), ('0e3ab1c1588848e0a4601d3bbe41e39f', null, '2018-08-12 18:26:04', '1', null, '2018-08-12 18:26:04', null, null, '', '', '6', 'menu2', 'https://www.baidu.com/', '', null, '006141059be045189b06265fa49552e8'), ('1688c655634843f9b6ad83ac3a8f951d', null, '2018-08-12 18:20:50', '1', null, '2018-08-12 18:20:50', null, null, '', '', '2', 'menu3', 'https://www.baidu.com/', '', null, '006141059be045189b06265fa49552e8'), ('2ff9865275854d5980bc4a8d455847a2', null, '2018-08-10 07:55:35', '0', null, '2018-08-10 07:55:35', null, null, '', '', '1', '应用管理', 'sys/oauth2', '', null, '760fc5e46e734250b0fcd1886c4cc02a'), ('322c645076f94f498c55a0d7354d6bbe', null, '2018-08-12 18:17:45', '1', null, '2018-08-12 18:17:45', null, null, '', '', '1', 'menu3', 'https://www.baidu.com/', '', null, '006141059be045189b06265fa49552e8'), ('3a6de32d5a3c4381b8808afe836c22e9', null, '2018-03-02 16:12:28', '1', null, null, null, null, 'role', null, '1', '角色管理', 'sys/role-list', null, null, '8f13fa7aa1dd40e181568e870a6a2d03'), ('3a7fd63c81304f5c82a7681fd892fdd6', null, '2018-03-02 16:12:29', '0', null, null, null, null, 'log', null, '5', '日志管理', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('67c1bf1eff3444b098dd190865beaf44', null, null, '1', null, '2018-05-09 15:35:43', null, null, 'sys', '', '1', '系统管理', '/admin', '', null, null), ('7094928c2f4740c78ace4cd7bd3e733e', null, '2018-03-02 16:12:27', '0', null, null, null, null, 'deptMsg', null, '2', '部门管理', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('73941109dd22490085de183472de9d49', null, null, '1', null, '2018-08-10 09:54:40', null, null, '', '', '1', '应用管理', 'oauth2/appManager', '', null, '760fc5e46e734250b0fcd1886c4cc02a'), ('760fc5e46e734250b0fcd1886c4cc02a', null, '2018-03-02 16:12:28', '1', null, null, null, null, 'resource', null, '4', '资源管理', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('828f62c806e6454cbf72bbe70bc227f1', null, '2018-03-02 16:12:27', '0', null, null, null, null, 'org', null, '2', '组织机构', 'sys/dept-user', null, null, '7094928c2f4740c78ace4cd7bd3e733e'), ('8e5f8c6bbd0f42c4bf07fb938ff5196c', null, '2018-03-02 16:12:27', '0', null, null, null, null, 'dept', null, '1', '所有部门', 'sys/dept-list', null, null, '7094928c2f4740c78ace4cd7bd3e733e'), ('8f13fa7aa1dd40e181568e870a6a2d03', null, '2018-03-02 16:12:28', '1', null, null, null, null, 'authority', null, '3', '权限', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('968e1dd124c94922bdce2294ecd07fdb', null, '2018-03-02 16:12:26', '1', null, null, null, null, 'user', null, '1', '用户管理', null, null, null, '67c1bf1eff3444b098dd190865beaf44'), ('97aeb7e88b5d4529a80f07c9ba4d2775', null, '2018-03-02 16:12:27', '0', null, null, null, null, 'disable', null, '1', '已注销机构', 'sys/dept-state', null, null, '7094928c2f4740c78ace4cd7bd3e733e'), ('b09b48cbfd254d0aae5250268e1b73e0', null, '2018-03-02 16:12:26', '1', null, null, null, null, 'diableuser', null, '2', '已注销人员', 'sys/disable-user-list', null, null, '968e1dd124c94922bdce2294ecd07fdb'), ('b8c29c90e70847f98925f4d68b95e955', null, null, '1', null, '2018-08-12 18:22:40', null, null, '', '', '4', 'menu5', 'https://www.baidu.com/', '', null, '006141059be045189b06265fa49552e8'), ('ba6255a161ef438ba36d1a675ef4480e', null, '2018-05-24 17:09:23', '0', null, '2018-05-24 17:09:23', null, null, '', '', '1', '日志列表', 'webLogsList', '', null, '3a7fd63c81304f5c82a7681fd892fdd6'), ('e0b2a5aa5d5c4a6ba043302f5efba2d8', null, '2018-08-12 18:25:44', '1', null, '2018-08-12 18:25:44', null, null, '', '', '5', 'menu6', 'https://www.baidu.com/', '', null, '006141059be045189b06265fa49552e8'), ('e26b8a7a87f64133ba15114d05f40ade', null, null, '1', null, '2018-05-09 15:36:54', null, null, 'enableuser', '', '1', '所有人员', 'sys/user-list', '', null, '968e1dd124c94922bdce2294ecd07fdb'), ('eff6fbfb01d94ea89362b9d447354a42', null, '2018-08-12 18:21:33', '1', null, '2018-08-12 18:21:33', null, null, '', '', '3', 'menu7', 'https://www.baidu.com/', '', null, '006141059be045189b06265fa49552e8'), ('f12d9eae0fec46e4816b6baf00ee6ef1', null, '2018-03-02 16:12:28', '1', null, null, null, null, 'menu', null, '1', '菜单管理', 'sys/menu-list', null, null, '760fc5e46e734250b0fcd1886c4cc02a'), ('f2bc9b3362b64276bb3b1d64cef0bd5c', null, null, '0', null, '2018-03-02 17:51:59', null, null, 'singleCode', '', '2', '单级字典', 'dataItem/single-list', '', null, '760fc5e46e734250b0fcd1886c4cc02a'), ('f4e4344330684f0c9b7c14a8d9557603', null, null, '0', null, '2018-03-02 17:52:06', null, null, 'multiCode', '', '3', '多级字典', 'dataItem/multi-list', '', null, '760fc5e46e734250b0fcd1886c4cc02a');
 COMMIT;
 
 -- ----------------------------
@@ -74,7 +93,7 @@ CREATE TABLE `role` (
 --  Records of `role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `role` VALUES ('5b66ecf45d634159a08468898b1b3217', null, '2018-03-02 16:12:07', '1', null, null, null, null, null, 'ROLE_ADMIN', null), ('cc377e1b32e74e71953ddcd595d5498b', null, '2018-03-02 16:12:07', '1', null, null, null, null, null, 'ROLE_USER', null);
+INSERT INTO `role` VALUES ('5b66ecf45d634159a08468898b1b3217', null, '2018-03-02 16:12:07', '1', null, null, null, null, null, 'ROLE_ADMIN', null), ('5dc12ff18e87449abb4ff533816c091d', null, '2018-08-10 15:48:47', '0', null, '2018-08-10 15:48:47', null, '', '1', 'zxasd', null), ('c6d6218f0b1245358f5fcb5df1066687', null, '2018-08-10 07:32:02', '0', null, '2018-08-10 07:32:02', null, 'adf', '1', 'ROLE_NEW', null), ('cc377e1b32e74e71953ddcd595d5498b', null, '2018-03-02 16:12:07', '1', null, null, null, null, null, 'ROLE_USER', null), ('f58569c938344f9598722400c79ae12c', null, '2018-08-10 15:46:33', '0', null, '2018-08-10 15:46:33', null, '', '1', 'adsfasdf', null);
 COMMIT;
 
 -- ----------------------------
@@ -96,7 +115,7 @@ CREATE TABLE `role_menu` (
 --  Records of `role_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `role_menu` VALUES ('3a6de32d5a3c4381b8808afe836c22e9', '5b66ecf45d634159a08468898b1b3217'), ('760fc5e46e734250b0fcd1886c4cc02a', '5b66ecf45d634159a08468898b1b3217'), ('8f13fa7aa1dd40e181568e870a6a2d03', '5b66ecf45d634159a08468898b1b3217'), ('968e1dd124c94922bdce2294ecd07fdb', '5b66ecf45d634159a08468898b1b3217'), ('b09b48cbfd254d0aae5250268e1b73e0', '5b66ecf45d634159a08468898b1b3217'), ('f12d9eae0fec46e4816b6baf00ee6ef1', '5b66ecf45d634159a08468898b1b3217');
+INSERT INTO `role_menu` VALUES ('006141059be045189b06265fa49552e8', '5b66ecf45d634159a08468898b1b3217'), ('0312745baa6645a39419474e8117cdd6', '5b66ecf45d634159a08468898b1b3217'), ('0e3ab1c1588848e0a4601d3bbe41e39f', '5b66ecf45d634159a08468898b1b3217'), ('1688c655634843f9b6ad83ac3a8f951d', '5b66ecf45d634159a08468898b1b3217'), ('322c645076f94f498c55a0d7354d6bbe', '5b66ecf45d634159a08468898b1b3217'), ('3a6de32d5a3c4381b8808afe836c22e9', '5b66ecf45d634159a08468898b1b3217'), ('67c1bf1eff3444b098dd190865beaf44', '5b66ecf45d634159a08468898b1b3217'), ('73941109dd22490085de183472de9d49', '5b66ecf45d634159a08468898b1b3217'), ('760fc5e46e734250b0fcd1886c4cc02a', '5b66ecf45d634159a08468898b1b3217'), ('8f13fa7aa1dd40e181568e870a6a2d03', '5b66ecf45d634159a08468898b1b3217'), ('968e1dd124c94922bdce2294ecd07fdb', '5b66ecf45d634159a08468898b1b3217'), ('b09b48cbfd254d0aae5250268e1b73e0', '5b66ecf45d634159a08468898b1b3217'), ('b8c29c90e70847f98925f4d68b95e955', '5b66ecf45d634159a08468898b1b3217'), ('e0b2a5aa5d5c4a6ba043302f5efba2d8', '5b66ecf45d634159a08468898b1b3217'), ('e26b8a7a87f64133ba15114d05f40ade', '5b66ecf45d634159a08468898b1b3217'), ('eff6fbfb01d94ea89362b9d447354a42', '5b66ecf45d634159a08468898b1b3217'), ('f12d9eae0fec46e4816b6baf00ee6ef1', '5b66ecf45d634159a08468898b1b3217'), ('006141059be045189b06265fa49552e8', 'cc377e1b32e74e71953ddcd595d5498b'), ('1688c655634843f9b6ad83ac3a8f951d', 'cc377e1b32e74e71953ddcd595d5498b'), ('322c645076f94f498c55a0d7354d6bbe', 'cc377e1b32e74e71953ddcd595d5498b'), ('eff6fbfb01d94ea89362b9d447354a42', 'cc377e1b32e74e71953ddcd595d5498b');
 COMMIT;
 
 -- ----------------------------
@@ -118,7 +137,7 @@ CREATE TABLE `role_user` (
 --  Records of `role_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `role_user` VALUES ('cc377e1b32e74e71953ddcd595d5498b', '34e68107e48a4c2180451c0f1f643308'), ('5b66ecf45d634159a08468898b1b3217', '6613831cac9e4597abbd0138116a8f3c'), ('cc377e1b32e74e71953ddcd595d5498b', '6613831cac9e4597abbd0138116a8f3c');
+INSERT INTO `role_user` VALUES ('cc377e1b32e74e71953ddcd595d5498b', '34e68107e48a4c2180451c0f1f643308'), ('cc377e1b32e74e71953ddcd595d5498b', '4169ca45fec04e119c5872b649b8f2c6'), ('5b66ecf45d634159a08468898b1b3217', '6613831cac9e4597abbd0138116a8f3c');
 COMMIT;
 
 -- ----------------------------

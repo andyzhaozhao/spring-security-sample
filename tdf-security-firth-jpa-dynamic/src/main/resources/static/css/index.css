@@ -1,0 +1,254 @@
+html,body{ width:100%;height:100%;overflow: hidden}
+body{ position: relative; background:url(../images/bg.jpg) no-repeat center center;background-size:100% 100%;font-family: 'Microsoft YaHei';}
+.logo{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 50%;
+    height: 20%;
+}
+.logo img{
+    max-width: 50%;
+    max-height: 50%;
+}
+
+.logout{
+    position: absolute;
+    right: 3%;
+    top: 10px;
+    width: 20%;
+    height: 20%;
+    text-align: right;
+}
+
+.logout img{
+    max-width: 25%;
+    max-height: 25%;
+}
+
+.title{
+    position: absolute;
+    top: 25%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10vmin;
+    font-weight: bold;
+    color: #fff;
+}
+
+.form-login{
+    position: absolute;
+    top: 42%;
+    left: 36%;
+    width: 28%;
+    bottom: 12%;
+}
+
+.form-login .form-control{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-login-bg{
+    position: absolute;
+    top: 42%;
+    left: 36%;
+    width: 28%;
+    bottom: 12%;
+    background: url(../images/u2.png);
+    opacity: 0.5;
+}
+
+.login-title{
+    width: 90%;
+    height: 12%;
+    color: #fff;
+    margin:auto;
+}
+
+.login-title .tb{
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.login-title .tbcell{
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 3vmin;
+    font-weight: bold;
+}
+
+.login-username{
+    width: 90%;
+    height: 25%;
+    margin:auto;
+}
+
+.login-pwd{
+    width: 90%;
+    height: 25%;
+    margin:auto;
+}
+
+.login-remember{
+    width: 90%;
+    margin:auto;
+    font-size:2vmin;
+    color: #fff;
+}
+
+.login-warn{
+    width: 90%;
+    margin:auto;
+    font-size:2vmin;
+    color: #ff0000;
+    font-weight: bold;
+    text-align: center;
+}
+
+.login-btns{
+    width: 90%;
+    height: 25%;
+    margin:auto;
+}
+
+.btn-login{
+    text-align: center;
+    color: #fff;
+    background: url(../images/u4.png) no-repeat center center;
+    background-size: 100% 100%;
+    border:none !important;
+    cursor: pointer;
+}
+
+.btn-login:active{
+    background: #4ebef8;
+}
+
+.form-control {
+    position: relative;
+    top: 20%;
+    display: block;
+    width: 100%;
+    height: 60%;
+    padding: 6px 12px;
+    font-size: 3vmin;
+    line-height: 1.42857143;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.nav{
+    position: absolute;
+    top: 55%;
+    left: 3%;
+    right: 3%;
+    bottom: 15%;
+}
+
+.nav ul{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    list-style: none;
+}
+
+.nav ul li{
+    float: left;
+    width: 12.5%;
+    height: 100%;
+    text-align: center;
+    list-style-type: none;
+}
+
+.nav ul li .itemImg{
+    display: block;
+    width: 80%;
+    height:0;
+    margin: auto;
+    padding-bottom: 80%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 80%;
+}
+
+.nav ul li:first-child .itemImg{
+    background-image: url(../images/u6.png);
+    background-size: 100%;
+}
+.nav ul li:first-child .itemImg:hover{
+    background-image: url(../images/u6_mouseOver.png);
+    cursor: pointer;
+}
+.nav ul li:nth-child(2) .itemImg{
+    background-image: url(../images/u8.png);
+}
+.nav ul li:nth-child(2) .itemImg:hover{
+    background-image: url(../images/u8_mouseOver.png);
+    cursor: pointer;
+}
+.nav ul li:nth-child(3) .itemImg{
+    background-image: url(../images/u10.png);
+}
+.nav ul li:nth-child(3) .itemImg:hover{
+    background-image: url(../images/u10_mouseOver.png);
+    cursor: pointer;
+}
+.nav ul li:nth-child(4) .itemImg{
+    background-image: url(../images/u12.png);
+}
+.nav ul li:nth-child(4) .itemImg:hover{
+    background-image: url(../images/u12_mouseOver.png);
+    cursor: pointer;
+}
+.nav ul li:nth-child(5) .itemImg{
+    background-image: url(../images/u14.png);
+}
+.nav ul li:nth-child(5) .itemImg:hover{
+    background-image: url(../images/u14_mouseOver.png);
+    cursor: pointer;
+}
+.nav ul li:nth-child(6) .itemImg{
+    background-image: url(../images/u16.png);
+}
+.nav ul li:nth-child(6) .itemImg:hover{
+    background-image: url(../images/u16_mouseOver.png);
+    cursor: pointer;
+}
+.nav ul li:nth-child(7) .itemImg{
+    background-image: url(../images/u20.png);
+}
+.nav ul li:nth-child(7) .itemImg:hover{
+    background-image: url(../images/u20_mouseOver.png);
+    cursor: pointer;
+}
+.nav ul li:last-child .itemImg{
+    background-image: url(../images/u18.png);
+}
+.nav ul li:last-child .itemImg:hover{
+    background-image: url(../images/u18_mouseOver.png);
+    cursor: pointer;
+}
+
+.nav ul li .itemLab{
+    display: block;
+    width: 100%;
+    margin-top:20%;
+    text-align: center;
+    color: #fff;
+    font-size:3vmin;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav ul li .itemLab:hover{
+    color: #ff0000;
+}
+

@@ -82,14 +82,14 @@
 					    contentType: false,
 					    cache: false,
 					    success: function (result) {
-					    	console.log("--->"+result.ajaxResultJson.msg);					    	
+					    	console.log("--->"+result.msg);
 					    	$("#tip").text('上传成功').removeClass('state3').addClass('state4');
 					    	//显示导入按钮  隐藏上传按钮 6显示5 隐藏
 					    	$("#importButton").removeClass('state5').addClass('state6');
 					    	//上传按钮隐藏
 					    	$("#uploadButton").removeClass('state6').addClass('state5');
 					    	//返回地址
-					    	filePath = result.ajaxResultJson.msg;
+					    	filePath = result.msg;
 					    	
 					    	$("#uploadButton").attr("disabled",true);
 					    	$("#importButton").removeAttr("disabled");
@@ -115,8 +115,8 @@
 	    			type : "POST",
 	    			success : function(result) {
 	    				 
-	    				if(result.ajaxResultJson!=null){
-	    					$("#tip").text(result.ajaxResultJson.msg+":"+result.ajaxResultJson.obj).addClass('state3');	
+	    				if(result!=null){
+	    					$("#tip").text(result.msg+":"+result.obj).addClass('state3');
 		                    $(this).removeAttr("disabled");
 							display_result();
 	    				}else{

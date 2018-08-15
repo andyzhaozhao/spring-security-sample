@@ -35,71 +35,20 @@
         refreshFunction();
     });
     function refreshFunction() {
-//        //加载机构树  -->start
-//        $.ajax({
-//            type: "Post",
-//            url: "sys/dept-tree-view",
-//            dataType: "json",
-//            success: function (result) {
-//                console.log(result);
-//                var data = result.ajaxResultJson.obj;
-//                $('#deptTree').treeview({
-//                    data: data,         // 数据源
-//                    //showCheckbox: true,   //是否显示复选框
-//                    color: "#000000",
-//                    backColor: "#FFFFFF",
-//                    highlightSelected: true,    //是否高亮选中
-//                    //nodeIcon: 'glyphicon glyphicon-user',    //节点上的图标
-//                    //nodeIcon: 'glyphicon glyphicon-globe',
-//                    emptyIcon: '',    //没有子节点的节点图标
-//                    multiSelect: false,    //多选
-//                    onNodeChecked: function (event, data) {
-//                        toNodeChecked(data.id);
-//                        console.log(data);
-//                    },
-//                    onNodeSelected: function (event, data) {
-//                        toNodeSelected(data.id)
-//                    }
-//                });
-//            },
-//            error: function () {
-//                alert("树形结构加载失败！")
-//            }
-//        });
-//        //加载机构树  -->end
-
         //加载用户  -->start
         $('#section-mail-list').load("sys/role-dept-user?roleId=" + roleId);
 
         //加载用户  -->end
 
     }
-//    //点击事件
-//    function toNodeChecked(id) {
-//        $('#section-mail-list').load("sys/role-dept-user?roleId=" + roleId + "&deptId=" + id);
-//
-//    }
-//    //选择事件
-//    function toNodeSelected(id) {
-//        $('#section-mail-list').load("sys/role-dept-user?roleId=" + roleId + "&deptId=" + id);
-//
-//    }
     //执行保存
     $("#save").click(function () {
-        /* 		var selectedUserIds  =  $('#roleUserListTable') .bootstrapTable('getAllSelections');
-         var length = selectedUserIds.length;
-         var ids = new Array();
-         if (length > 0) {
-         $.each(selectedUserIds, function(index, item) {
-         ids.push(item.id);
-         });
-         } */
         $.ajax({
-            url: 'sys/role-user-save.json',
+            url: 'sys/role-user-save',
             type: 'post',
             data: {
                 userIds: overAllIds,
-                preUserIds: roleUsersStr,
+                preUserIds: selectedUserIds,
                 roleId: roleId
             },
             success: function (data, textStatus, jqXHR) {

@@ -1,9 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head>
     <title>Login</title>
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="theme/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -16,7 +16,8 @@
 <body class="templatemo-bg-image-1">
 <div class="container">
     <div class="col-md-12">
-        <form class="form-horizontal templatemo-login-form-2" role="form" action="#" method="post"  th:action="@{/j_spring_security_check}">
+        <form class="form-horizontal templatemo-login-form-2" role="form" action="#" method="post"
+              th:action="@{/j_spring_security_check}">
             <div class="row">
                 <div class="col-md-12">
                     <h1>登录</h1>
@@ -30,7 +31,7 @@
                             <label for="username" class="control-label">用户名</label>
                             <div class="templatemo-input-icon-container">
                                 <i class="fa fa-user"></i>
-                                <input class="form-control"  type="text" name="username" placeholder="请输入用户名" />
+                                <input class="form-control" type="text" name="username" placeholder="请输入用户名"/>
                             </div>
                         </div>
                     </div>
@@ -40,7 +41,7 @@
                             <div class="templatemo-input-icon-container">
                                 <i class="fa fa-lock"></i>
                                 <input type="password" name="password" placeholder="请输入密码"
-                                       class="form-control" />
+                                       class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -52,7 +53,7 @@
                                 <input type="yzm" class="form-control" id="yzm" placeholder=""/>
                                 <div class="yzm-tp">
                                     <img id="imageF"
-                                         src="image" /> <a href="#" id="flashImage">看不清楚换一张</a>
+                                         src="image"/> <a href="#" id="flashImage">看不清楚换一张</a>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +64,7 @@
                                 <label>
                                     <input
                                             type="checkbox" id="remember-me"
-                                            name="_spring_security_remember_me" />记住密码
+                                            name="_spring_security_remember_me"/>记住密码
                                 </label>
                             </div>
                         </div>
@@ -82,21 +83,21 @@
             </div>
             <input
                     type="hidden" th:name="${_csrf.parameterName}"
-                    th:value="${_csrf.token}" th:if="${_csrf}" />
+                    th:value="${_csrf.token}" th:if="${_csrf}"/>
         </form>
         <center>
-            <label th:if="${session.SPRING_SECURITY_LAST_EXCEPTION!=null}"><span class="c-red"
-                                                                                 th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}" /></label>
+            <label th:if="${session.SPRING_SECURITY_LAST_EXCEPTION!=null}">
+                <span class="c-red" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"/>
+            </label>
         </center>
     </div>
 </div>
 <script src="js/jquery-1.10.2.min.js" th:src="@{js/jquery-1.10.2.min.js}"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("#flashImage").click(
-                function() {
-                    $('#imageF').hide().attr('src','image' + '?'	+ Math.floor(Math.random() * 100)).fadeIn();
-                });
+    $(document).ready(function () {
+        $("#flashImage").click(function () {
+            $('#imageF').hide().attr('src', 'image' + '?' + Math.floor(Math.random() * 100)).fadeIn();
+        });
     });
 
 </script>

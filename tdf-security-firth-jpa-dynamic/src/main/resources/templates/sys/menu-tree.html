@@ -29,7 +29,7 @@
 			 type : "POST",
 			 success : function(result) {
 				 var resultDate = new Array();
-				 var jsonArray = result.ajaxResultJson.obj;
+				 var jsonArray = result.obj;
 				 if (jsonArray != null && jsonArray.length>0) {
 					 walk(jsonArray, resultDate);
 				 }

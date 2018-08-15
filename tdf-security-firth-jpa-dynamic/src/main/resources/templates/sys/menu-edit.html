@@ -1,189 +1,178 @@
 <section class="panel" xmlns:th="http://www.thymeleaf.org">
-	<header class="panel-heading"> 菜单维护 </header>
-	<div class="panel-body right_centent">
-		<form id="menu-form-wizard" role="form" name="form-wizard"
-			class="form-horizontal" th:object="${menuDto}">
-			<input type="hidden" name="id" id="menuId" th:value="${menuDto.id}"
-				readonly="readonly" /> <input type="hidden" name="flag"
-				th:value="${menuDto.flag}" readonly="readonly" /> <input
-				type="hidden" name="remark" th:value="${menuDto.remark}"
-				readonly="readonly" />
-				 <input
-				type="hidden" name="token" th:value="${menuDto.token}"
-				readonly="readonly" />
+    <header class="panel-heading"> 菜单维护</header>
+    <div class="panel-body right_centent">
+        <form id="menu-form-wizard" role="form" name="form-wizard"
+              class="form-horizontal" th:object="${menuDto}">
+            <input type="hidden" name="id" id="menuId" th:value="${menuDto.id}"
+                   readonly="readonly"/>
+            <input type="hidden" name="flag" th:value="${menuDto.flag}" readonly="readonly"/>
+            <input type="hidden" name="remark" th:value="${menuDto.remark}" readonly="readonly"/>
+            <input type="hidden" name="token" th:value="${menuDto.token}" readonly="readonly"/>
+            <div class="form-group ">
+                <label for="menuParentId" class="control-label col-lg-2  text-muted">父级菜单</label>
+                <div class="col-lg-8">
+                    <input class="form-control" id="parentName" onfocus="this.blur();" readonly="true"
+                           type="text" name="parentName"
+                           th:value="${menuDto.parentName==null? '':(menuDto.parentName)}"/>
+                    <input class="form-control" id="menuParentId" onfocus="this.blur();"
+                           type="hidden" name="parentId"
+                           th:value="${menuDto.parentId==null? '':(menuDto.parentId)}"/>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="cemail" class="control-label col-lg-2">菜单序号</label>
+                <div class="col-lg-8">
+                    <input class="form-control" id="menuIndex" onfocus="this.blur();"
+                           type="number" name="menuIndex" min="0" max="100" required="required"
+                           th:value="${menuDto.menuIndex==null? 1:(menuDto.menuIndex)}"/>
+                    <label for="menuParentId" class="error"></label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="menuName" class="control-label col-lg-2">菜单名称</label>
+                <div class="col-lg-8">
+                    <input class="form-control" id="menuName" type="text" required="required"
+                           name="menuName" th:value="${menuDto.menuName}"/>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="menuUrl" class="control-label col-lg-2">菜单地址</label>
+                <div class="col-lg-8">
+                    <input class="form-control" id="menuUrle" type="text"
+                           name="menuUrl" th:value="${menuDto.menuUrl}"/>
+                    <label for="menuUrl" class="error"></label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="mark" class="control-label col-lg-2">菜单标记</label>
+                <div class="col-lg-8">
+                    <input class="form-control" id="mark" type="text"
+                           name="mark" th:value="${menuDto.mark}"/>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="menuDesc" class="control-label col-lg-2">菜单描述</label>
+                <div class="col-lg-8">
+                    <input class="form-control" id="menuDesc" type="text"
+                           name="menuDesc" th:value="${menuDto.menuDesc}"/>
+                    <label for="menuDesc" class="error"></label>
+                </div>
+            </div>
 
-			<div class="form-group ">
-				<label for="menuParentId" class="control-label col-lg-2  text-muted">父级菜单</label>
-				<div class="col-lg-8">
-						<input class="form-control" id="parentName" onfocus="this.blur();"  readonly="true"   
-						type="text" name="parentName" 
-						th:value="${menuDto.parentName==null? '':(menuDto.parentName)}" />
-						<input class="form-control" id="menuParentId" onfocus="this.blur();"
-						type="hidden" name="parentId" 
-						th:value="${menuDto.parentId==null? '':(menuDto.parentId)}" />
-				</div>
-			</div>
-			<div class="form-group ">
-				<label for="cemail" class="control-label col-lg-2">菜单序号</label>
-				<div class="col-lg-8">
-					<input class="form-control" id="menuIndex"  onfocus="this.blur();"
-						type="number" name="menuIndex" min="0" max="100"  required="required"
-						th:value="${menuDto.menuIndex==null? 1:(menuDto.menuIndex)}" />
-									<label for="menuParentId" 	class="error"></label>
-				</div>
-			</div>
-			<div class="form-group ">
-				<label for="menuName" class="control-label col-lg-2">菜单名称</label>
-				<div class="col-lg-8">
-					<input class="form-control" id="menuName" type="text"  required="required"
-						name="menuName" th:value="${menuDto.menuName}" />
-				</div>
-</div>
-				<div class="form-group ">
-					<label for="menuUrl" class="control-label col-lg-2">菜单地址</label>
-					<div class="col-lg-8">
-						<input class="form-control" id="menuUrle" type="text"
-							name="menuUrl" th:value="${menuDto.menuUrl}" />
-								<label for="menuUrl" 	class="error"></label>
-					</div>
-					</div>
-					<div class="form-group ">
-						<label for="mark" class="control-label col-lg-2">菜单标记</label>
-						<div class="col-lg-8">
-							<input class="form-control" id="mark" type="text"
-								name="mark" th:value="${menuDto.mark}" />
-						</div>
-					</div>
-					<div class="form-group ">
-						<label for="menuDesc" class="control-label col-lg-2">菜单描述</label>
-						<div class="col-lg-8">
-							<input class="form-control" id="menuDesc" type="text"
-								name="menuDesc"  th:value="${menuDto.menuDesc}" />
-							<label for="menuDesc" class="error"></label>
-						</div>
-					</div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-8">
+                    <button id="saveButton" type="button" class="btn btn-primary">保存</button>
+                    <button class="btn btn-default" type="reset">重置</button>
+                </div>
+            </div>
+        </form>
 
-					<div class="form-group">
-						<div class="col-lg-offset-2 col-lg-8">
-							<button id="saveButton" type="button" class="btn btn-primary">保存</button>
-							<button class="btn btn-default" type="reset">重置</button>
-						</div>
-					</div>
-		</form>
-
-	</div>
+    </div>
 
 </section>
 
 <script th:inline="javascript" xmlns:th="http://www.thymeleaf.org">
-	/*<![CDATA[*/
-		$('input[required]').after('<span  class="muted">*</span>');  
-	var menuId = /*[[${menuDto.id}]]*/;
-	//------------------菜单树end-----------------------
-	 $("#menu-form-wizard").bootstrapValidator({
-		 message: 'This value is not valid',
-	        feedbackIcons: {
-	            valid: 'glyphicon glyphicon-ok',
-	            invalid: 'glyphicon glyphicon-remove',
-	            validating: 'glyphicon glyphicon-refresh'
-	        },
-	        fields: {
-	        	menuIndex: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '序号必填'
-	                    },
-	                    lessThan: {
-	                        value: 100,
-	                        inclusive: true,
-	                        message: '序号最大100'
-	                    }
-	                }
-	            },
-	            menuName: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '菜单名必填'
-	                    }
-	                   
-	                }   
-	            },
-	            menuUrl: {
-	                validators: {
-	                    callback: { 
-	   					 callback: function(value, validator) {  
-							 var element = $("#menu-form-wizard").data("bootstrapValidator").getFieldElements('parentId');
-							 var parentName = $("#menu-form-wizard").data("bootstrapValidator").getFieldElements('parentName');
-							 
-							 if(parentName.val() != '系统管理'){
-								 if(element.val()!=""){
-										if(value == ""){
-										 return {  
-			                                   valid: false,  
-			                                   message: '当前菜单地址不能为空。'  
-			                               } 
-										 }
-									 } 
-							 }
-							 
-							 return true; 
-						 }
-					 }
-	                   
-	                }   
-	            },
-	            
-	           
-	        }
-		 
-		 
-		 
-	 });
+    /*<![CDATA[*/
+    $('input[required]').after('<span  class="muted">*</span>');
+    var menuId = /*[[${menuDto.id}]]*/;
+    //------------------菜单树end-----------------------
+    $("#menu-form-wizard").bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            menuIndex: {
+                validators: {
+                    notEmpty: {
+                        message: '序号必填'
+                    },
+                    lessThan: {
+                        value: 100,
+                        inclusive: true,
+                        message: '序号最大100'
+                    }
+                }
+            },
+            menuName: {
+                validators: {
+                    notEmpty: {
+                        message: '菜单名必填'
+                    }
+
+                }
+            },
+            menuUrl: {
+                validators: {
+                    callback: {
+                        callback: function (value, validator) {
+                            var element = $("#menu-form-wizard").data("bootstrapValidator").getFieldElements('parentId');
+                            var parentName = $("#menu-form-wizard").data("bootstrapValidator").getFieldElements('parentName');
+
+                            if (parentName.val() != '系统管理') {
+                                if (element.val() != "") {
+                                    if (value == "") {
+                                        return {
+                                            valid: false,
+                                            message: '当前菜单地址不能为空。'
+                                        }
+                                    }
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+
+                }
+            }
+        }
+    });
 
     //------------------表单校验end-----------------------
-	var menuId = /*[[${menuDto.id}]]*/;
-	var parentId = /*[[${menuDto.parentId}]]*/;
-	//保存 菜单
-	$("#saveButton").click(
-			function() {
-				//重新校验 父级菜单
-				$('#menu-form-wizard').data("bootstrapValidator");
-				var flag = $('#menu-form-wizard').bootstrapValidator('validate')
-						.data('bootstrapValidator').isValid();
-				
-				if (flag) {
-					var str = $('#menu-form-wizard').serializeObject();
-					$.post("sys/menu-save.json", {
-						models : JSON.stringify(str)
-					}, function(result) {
-						if(result.ajaxResultJson.success){
-						    //静态添加节点
-						    if(parentId!=null){
-                            var parentNode = $('#left-tree').treeview('getSelected');
-						    }
-                            var node = {
-                            		text:result.ajaxResultJson.obj.menuName
-                            };
-                            if(menuId==null){
-                            $('#left-tree').treeview('addNode', [node, parentNode]);
-                            }else{
-                         		var node = $('#left-tree').treeview('getSelected');
-                            	var newNode={
-                						text:$('#menuName').val()
-                					};
-                    			$('#left-tree').treeview('updateNode', [ node, newNode]);
-                            }
-            				layer.msg("保存成功");
-            				//onLoad();
-						}else{
-							layer.msg('保存失败', {icon: 1});
-						}
-						
-					});
-				}
+    var menuId = /*[[${menuDto.id}]]*/;
+    var parentId = /*[[${menuDto.parentId}]]*/;
+    //保存 菜单
+    $("#saveButton").click(function () {
+        //重新校验 父级菜单
+        $('#menu-form-wizard').data("bootstrapValidator");
+        var flag = $('#menu-form-wizard').bootstrapValidator('validate')
+                .data('bootstrapValidator').isValid();
 
-			});
+        if (flag) {
+            var str = $('#menu-form-wizard').serializeObject();
+            $.post("sys/menu-save.json", {
+                models: JSON.stringify(str)
+            }, function (result) {
+                if (result.success) {
+                    //静态添加节点
+                    if (parentId != null) {
+                        var parentNode = $('#left-tree').treeview('getSelected');
+                    }
+                    var node = {
+                        text: result.obj.menuName
+                    };
+                    if (menuId == null) {
+                        $('#left-tree').treeview('addNode', [node, parentNode]);
+                    } else {
+                        var node = $('#left-tree').treeview('getSelected');
+                        var newNode = {
+                            text: $('#menuName').val()
+                        };
+                        $('#left-tree').treeview('updateNode', [node, newNode]);
+                    }
+                    layer.msg("保存成功");
+                    //onLoad();
+                } else {
+                    layer.msg('保存失败', {icon: 1});
+                }
 
-	/*]]>*/
+            });
+        }
+    });
+
+    /*]]>*/
 </script>
 

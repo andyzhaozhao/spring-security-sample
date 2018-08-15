@@ -327,17 +327,17 @@
 	  		  btn: ['删除'] //按钮
 	  		}, function(){
 	  			$.ajax({
-	  		    	url: 'sys/role-delete.json',
+	  		    	url: 'sys/role-delete',
 	  		    	data:{
 	  		    		ids:id
 	  		    	},
 	  		    	type: 'post',
 	  		    	success: function(data, textStatus, jqXHR) {
-	  		    		if(data.error)
-	  		    			layer.msg(data.error, {icon: 2});
-	  		    		else{
-	  		    			layer.msg('删除角色成功', {icon: 1});
-	  		    			refreshFunction();
+	  		    		if(data.success){
+							layer.msg('删除角色成功', {icon: 1});
+							refreshFunction();
+						} else{
+							layer.msg(data.obj, {icon: 2});
 	  		    		}
 	  		     	},
 	  		     	error: function(jqXHR, textStatus, errorThrown) { 

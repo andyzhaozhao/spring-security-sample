@@ -108,7 +108,7 @@
 					}, function(result) {				console.log(result+"-----");
 					//	showTips("保存成功");
 						$('#Modal_edit').modal('hide');
-						var warn = result.ajaxResultJson.success;
+						var warn = result.success;
 						if (warn != null&&warn==true) {
 							
 							layer.msg('保存成功', {icon: 1});
