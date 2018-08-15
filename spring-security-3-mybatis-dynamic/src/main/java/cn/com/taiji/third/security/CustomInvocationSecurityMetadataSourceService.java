@@ -38,7 +38,6 @@ public class CustomInvocationSecurityMetadataSourceService implements
             array.add(cfg);
             map.put(permission.getUrl(), array);
         }
-
     }
 
     @Override

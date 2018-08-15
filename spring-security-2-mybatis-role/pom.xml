@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.com.taiji</groupId>
-	<artifactId>tdf-security-second-mybatis-role</artifactId>
+	<artifactId>spring-security-2-mybatis-role</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>tdf-security-second-mybatis-role</name>
+	<name>spring-security-2-mybatis-role</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
