@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.com.taiji</groupId>
-	<artifactId>tdf-security-firth-jpa-dynamic</artifactId>
+	<artifactId>tdf-security-sample</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>tdf-security-firth-jpa-dynamic</name>
+	<name>tdf-security-sample</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
