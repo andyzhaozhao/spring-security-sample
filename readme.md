@@ -1,6 +1,6 @@
 全方位了解spring security功能的demo
 版本：spring boot 1.15.14
-相关博客学习记录：http://tech.taiji.com.cn/community/blogShow?id=7bbe15aa85014470a1a95cb15aa424f5
+上一篇相学习记录：http://tech.taiji.com.cn/community/forumPost/postInfo?id=39f2f4b2951f4f53a4cc4855d300533e
 
 1. tdf-security-1-simple          spring security配置+测试
 2. tdf-security-2-mybatis-role    springboot+mybatis＋SpringSecurity 实现用户角色数据库管理+salt加密
