@@ -65,11 +65,11 @@ public class TaijiFilterSecurityInterceptor extends AbstractSecurityInterceptor
 //		Collection<ConfigAttribute> attributes = fisMetadataSource.getAttributes(fi);
 ////		// 2.是否拥有权限
 //	this.getAccessDecisionManager().decide(authenticated, fi, attributes);
-        Authentication authenticated = SecurityContextHolder.getContext().getAuthentication();
-        HttpSession s = fi.getRequest().getSession();
-        if (authenticated == null && s.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
-            SecurityContextHolder.setContext((SecurityContext) s.getAttribute("SPRING_SECURITY_CONTEXT"));
-        }
+//        Authentication authenticated = SecurityContextHolder.getContext().getAuthentication();
+//        HttpSession s = fi.getRequest().getSession();
+//        if (authenticated == null && s.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+//            SecurityContextHolder.setContext((SecurityContext) s.getAttribute("SPRING_SECURITY_CONTEXT"));
+//        }
         InterceptorStatusToken token = super.beforeInvocation(fi);
         try {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
