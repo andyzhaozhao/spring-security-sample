@@ -40,6 +40,10 @@ public class CustomInvocationSecurityMetadataSourceService implements
         }
     }
 
+    /**
+     * 方法返回本次访问需要的权限，可以有多个权限。在上面的实现中如果没有匹配的url直接返回null
+     * www也就是没有配置权限的url默认都为白名单，想要换成默认是黑名单只要修改这里即可。
+     */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         if (map == null) {
