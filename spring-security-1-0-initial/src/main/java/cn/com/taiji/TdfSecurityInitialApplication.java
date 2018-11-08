@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TdfSecurityFirstSimpleApplication {
+public class TdfSecurityInitialApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TdfSecurityFirstSimpleApplication.class, args);
+		SpringApplication.run(TdfSecurityInitialApplication.class, args);
 	}
 }

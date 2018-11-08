@@ -9,12 +9,12 @@
       	<div class="mt-3">
         	<h2>Hello Spring Security</h2>
         </div>
-		<div sec:authorize="isAuthenticated()">
+		<div>
 			<p>已有用户登录</p>
-			<p>登录的用户为: <span sec:authentication="name"></span></p>
- 			<p>用户角色为: <span sec:authentication="principal.authorities"></span></p>
+			<p>登录的用户为: </p>
+ 			<p>用户角色为: </p>
 		</div>
- 		<div sec:authorize="isAnonymous()">
+ 		<div>
 			<p>未有用户登录</p>
 		</div>
 	</div>
