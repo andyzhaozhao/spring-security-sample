@@ -1,6 +1,8 @@
 package cn.com.taiji.controller;
 
 import cn.com.taiji.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,5 @@ public class AdminController {
 		model.addAttribute("userList", list);
 		return new ModelAndView("users/list", "userModel", model);
 	}
- 
 
 }
