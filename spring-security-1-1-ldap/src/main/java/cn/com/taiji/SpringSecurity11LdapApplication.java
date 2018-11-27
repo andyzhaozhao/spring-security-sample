@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringSecurity11x509Application {
+public class SpringSecurity11LdapApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringSecurity11x509Application.class, args);
+		SpringApplication.run(SpringSecurity11LdapApplication.class, args);
 	}
 }

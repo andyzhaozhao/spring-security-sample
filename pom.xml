@@ -25,7 +25,10 @@
     <modules>
         <module>spring-security-1-0-initial</module>
         <module>spring-security-1-1-helloworld</module>
-        <module>spring-security-1-1-x509/module>
+        <module>spring-security-1-1-x509</module>
+        <module>spring-security-1-1-openid</module>
+        <module>spring-security-1-1-cas</module>
+        <module>spring-security-1-1-ldap</module>
         <module>spring-security-1-1-helloworld-config</module>
         <module>spring-security-1-2-actuator</module>
         <module>spring-security-2-mybatis-role</module>
