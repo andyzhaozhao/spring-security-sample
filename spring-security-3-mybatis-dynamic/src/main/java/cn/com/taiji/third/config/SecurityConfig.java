@@ -2,6 +2,8 @@ package cn.com.taiji.third.config;
 
 import cn.com.taiji.third.security.CustomFilterSecurityInterceptor;
 import cn.com.taiji.third.security.CustomUserService;
+import cn.com.taiji.third.security.exception.CustomAccessDeniedHandler;
+import cn.com.taiji.third.security.exception.CustomAuthenticationEntryPoint;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        HttpSecurity httpSecurity = http.authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/fonts/**", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
@@ -31,7 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error").permitAll()
                 //注销行为任意访问
                 .and().logout().permitAll()
+//                .and().exceptionHandling().accessDeniedPage("/403")
+                .and().exceptionHandling().accessDeniedHandler(customAccessDeniedHandler())
+//                .authenticationEntryPoint(customAuthenticationEntryPoint())
                 .and().addFilterBefore(customFilterSecurityInterceptor, FilterSecurityInterceptor.class);
+
     }
 
     @Autowired
@@ -51,6 +57,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CustomAccessDeniedHandler customAccessDeniedHandler() {
+        CustomAccessDeniedHandler cadh= new CustomAccessDeniedHandler();
+        cadh.setErrorPage("/403");
+        return cadh;
+    }
+
+    @Bean
+    public CustomAuthenticationEntryPoint customAuthenticationEntryPoint() {
+        return new CustomAuthenticationEntryPoint();
     }
 
 }
