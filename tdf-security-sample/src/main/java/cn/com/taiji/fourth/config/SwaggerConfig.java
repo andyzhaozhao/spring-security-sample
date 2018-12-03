@@ -39,7 +39,7 @@ package cn.com.taiji.fourth.config;//package cn.com.taiji.fourth.config;
 //                .title("Tdf security演示RESTful APIs")
 //                .description("如果有疑问可以及时沟通，主要负责人andyzhao")
 //                .termsOfServiceUrl("XXXXXXXXXXX")
-//                .contact(new Contact("zhaozhao", "http://tech.taiji.com.cn", "zhaozhao@mail.taiji.com..cn"))
+//                .contact(new Contact("user", "http://tech.taiji.com.cn", "zhaozhao@mail.taiji.com..cn"))
 //                .version("1.0")
 //                .build();
 //    }

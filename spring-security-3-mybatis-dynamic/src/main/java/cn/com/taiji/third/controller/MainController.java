@@ -24,12 +24,6 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/admin")
-    @ResponseBody
-    public String hello() {
-        return "hello admin";
-    }
-
     @GetMapping("/login")
     public String login() {
         return "login";

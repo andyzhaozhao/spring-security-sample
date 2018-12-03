@@ -27,7 +27,7 @@ public class UserController {
 	public ModelAndView list(Model model) {
 
 		List<User> list = new ArrayList<>();	// 当前所在页面数据列表
-		list.add(new User(1L, "zhaozhao", 30));
+		list.add(new User(1L, "user", 30));
 		list.add(new User(2L,"admin", 29));
 		list.add(new User(3L,"actuator", 29));
 		model.addAttribute("title", "用户管理");

@@ -30,8 +30,13 @@
         <module>spring-security-1-1-cas</module>
         <module>spring-security-1-1-ldap</module>
         <module>spring-security-1-1-helloworld-config</module>
+        <module>spring-security-1-1-helloworld-headers</module>
         <module>spring-security-1-2-actuator</module>
-        <module>spring-security-2-mybatis-role</module>
+        <module>spring-security-2-1-jdbc</module>
+        <module>spring-security-2-2-jdbc-mysql</module>
+        <module>spring-security-2-3-jdbc-custom</module>
+        <module>spring-security-2-3-jdbc-rememberme</module>
+        <module>spring-security-3-1-mybatis-role</module>
         <module>spring-security-3-mybatis-dynamic</module>
         <module>tdf-security-sample</module>
     </modules>

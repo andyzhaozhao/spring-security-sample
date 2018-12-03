@@ -4,6 +4,7 @@
     <resultMap id="userMap" type="cn.com.taiji.third.domain.User">
         <id property="id" column="ID"/>
         <result property="user_name" column="user_name"/>
+        <result property="login_name" column="login_name"/>
         <result property="password" column="password"/>
         <collection property="roles" ofType="cn.com.taiji.third.domain.Role">
             <result column="role_name" property="role_name"/>
@@ -17,4 +18,8 @@
         LEFT JOIN role r on r.id = ru.role_id
         where u.login_name= #{user_name}
 	</select>
+    <select id="listAll" resultType="cn.com.taiji.third.domain.User">
+        select *
+        from user_info u
+    </select>
 </mapper>

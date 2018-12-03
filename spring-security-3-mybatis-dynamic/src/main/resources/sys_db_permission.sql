@@ -20,8 +20,8 @@ CREATE TABLE `tdf_permission` (
 --  Records of `tdf_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `tdf_permission` VALUES ('5b66ecf45d634159a08468898b1b3218', null, '2018-07-26 10:56:37', '1', null, '2018-07-26 10:56:56', null, 'home', '/', null, 'ROLE_USER');
-INSERT INTO `tdf_permission` VALUES ('cc377e1b32e74e71953ddcd595d54918', null, '2018-07-26 10:56:37', '1', null, '2018-07-26 10:56:56', null, 'ABel', '/admin', null, 'ROLE_ADMIN');
+INSERT INTO `tdf_permission` VALUES ('5b66ecf45d634159a08468898b1b3218', null, '2018-07-26 10:56:37', '1', null, '2018-07-26 10:56:56', null, 'home', '/users', null, 'ROLE_USER');
+INSERT INTO `tdf_permission` VALUES ('cc377e1b32e74e71953ddcd595d54918', null, '2018-07-26 10:56:37', '1', null, '2018-07-26 10:56:56', null, 'ABel', '/admins', null, 'ROLE_ADMIN');
 COMMIT;
 
 
