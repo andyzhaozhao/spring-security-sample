@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>xxxxx平台</title>
+    <link rel="stylesheet" href="css/index.css"/>
+    <script src="js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+<canvas class="canvas1" id="canvas1" width="1289" height="404"></canvas>
+<div class="logo">
+    <img src="images/logo4.png" alt=""/>
+</div>
+<div class="logout">
+    <a href="admin">
+        <img src="images/setting.png" alt=""/>
+    </a>
+    <a th:href="logout">
+        <img src="images/u38.png" alt=""/>
+    </a>
+</div>
+<div class="title">xxxxx平台</div>
+<div class="nav">
+    <ul>
+        <li th:each="menuChildren:${rootMenus}">
+            <a th:href="${menuChildren.menuUrl}" target="_blank" class="itemImg"/>
+            <a  th:text="${menuChildren.menuName}"
+                th:href="${menuChildren.menuUrl}" target="_blank" class="itemLab"/>
+        </li>
+    </ul>
+<!--
+    <ul>
+        <li>
+            <a href="http://gztest.peopleyun.cn/hotnews/country" target="_blank" class="itemImg"></a>
+            <a href="http://gztest.peopleyun.cn/hotnews/country" target="_blank" class="itemLab">舆情热点</a>
+        </li>
+        <li>
+            <a href="http://47.92.74.192:8080/ncc2?key=01cfcd4f6b8770febfb40cb906715822" target="_blank"
+               class="itemImg"></a>
+            <a href="http://47.92.74.192:8080/ncc2?key=01cfcd4f6b8770febfb40cb906715822" target="_blank"
+               class="itemLab">报道指挥</a>
+        </li>
+        <li>
+            <a href="http://ruixin.tjxinmeiti.com/login/SSLogin.aspx" target="_blank" class="itemImg"></a>
+            <a href="http://ruixin.tjxinmeiti.com/login/SSLogin.aspx" target="_blank" class="itemLab">智能采编</a>
+        </li>
+        <li>
+            <a href="http://ruida.tjxinmeiti.com" target="_blank" class="itemImg"></a>
+            <a href="http://ruida.tjxinmeiti.com" target="_blank" class="itemLab">媒体发布</a>
+        </li>
+        <li>
+            <a href="http://47.93.188.105/chuanboli" target="_blank" class="itemImg"></a>
+            <a href="http://47.93.188.105/chuanboli" target="_blank" class="itemLab">传播分析</a>
+        </li>
+        <li>
+            &lt;!&ndash;
+            <a href="http://123.56.219.172:84/%E7%89%88%E9%9D%A2%E7%A8%BF%E4%BB%B6%E8%80%83%E8%AF%84.html" target="_blank" class="itemImg"></a>
+            <a href="http://123.56.219.172:84/%E7%89%88%E9%9D%A2%E7%A8%BF%E4%BB%B6%E8%80%83%E8%AF%84.html" target="_blank" class="itemLab">绩效考核</a>
+    &ndash;&gt;
+            <a href="http://ruixin.tjxinmeiti.com:8015/web/views/personCenter_home.html" target="_blank"
+               class="itemImg"></a>
+            <a href="http://ruixin.tjxinmeiti.com:8015/web/views/personCenter_home.html" target="_blank"
+               class="itemLab">绩效考核</a>
+        </li>
+        &lt;!&ndash; <li> &ndash;&gt;
+        &lt;!&ndash; <a href="http://124.205.145.236:5050/mod2/f3" target="_blank" class="itemImg"></a> &ndash;&gt;
+        &lt;!&ndash; <a href="http://124.205.145.236:5050/mod2/f3" target="_blank" class="itemLab">用户分析</a> &ndash;&gt;
+        &lt;!&ndash; </li> &ndash;&gt;
+        <li>
+            <a href="http://123.56.219.172/" target="_blank" class="itemImg"></a>
+            <a href="http://123.56.219.172/" target="_blank" class="itemLab">一体化</a>
+        </li>
+    </ul>-->
+</div>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        var canvas = document.getElementById("canvas1");
+
+        ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        ctx.strokeStyle = (new Color(200)).style;
+
+        var mousePosition = {
+            // x: 30 * canvas.width / 100,
+            // y: 30 * canvas.height / 100
+            x: canvas.width / 2,
+            y: canvas.height / 3
+        };
+
+        var dots = {
+            nb: 80,
+            distance: 160,
+            d_radius: 160,
+            array: []
+        };
+
+        function colorValue(min) {
+            return Math.floor(Math.random() * 255 + min);
+        }
+
+        function createColorStyle(r, g, b) {
+            return 'rgba(' + r + ',' + g + ',' + b + ', 0.5)';
+        }
+
+        function mixComponents(comp1, weight1, comp2, weight2) {
+            return (comp1 * weight1 + comp2 * weight2) / (weight1 + weight2);
+        }
+
+        function averageColorStyles(dot1, dot2) {
+            var color1 = dot1.color,
+                    color2 = dot2.color;
+
+            var r = mixComponents(color1.r, dot1.radius, color2.r, dot2.radius),
+                    g = mixComponents(color1.g, dot1.radius, color2.g, dot2.radius),
+                    b = mixComponents(color1.b, dot1.radius, color2.b, dot2.radius);
+            return createColorStyle(Math.floor(r), Math.floor(g), Math.floor(b));
+        }
+
+        function Color(min) {
+            min = min || 0;
+            this.r = colorValue(min);
+            this.g = colorValue(min);
+            this.b = colorValue(min);
+            this.style = createColorStyle(this.r, this.g, this.b);
+        }
+
+        function Dot() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+
+            this.vx = -.5 + Math.random();
+            this.vy = -.5 + Math.random();
+
+            this.radius = Math.random() * 3;
+
+            this.color = new Color(100);
+            console.log(this);
+        }
+
+        Dot.prototype = {
+            draw: function () {
+                ctx.beginPath();
+                ctx.fillStyle = this.color.style;
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fill();
+            }
+        };
+
+        function createDots() {
+            for (var i = 0; i < dots.nb; i++) {
+                dots.array.push(new Dot());
+            }
+        }
+
+        function moveDots() {
+            for (var i = 0; i < dots.nb; i++) {
+
+                var dot = dots.array[i];
+
+                if (dot.y < 0 || dot.y > canvas.height) {
+                    dot.vx = dot.vx;
+                    dot.vy = -dot.vy;
+                }
+                else if (dot.x < 0 || dot.x > canvas.width) {
+                    dot.vx = -dot.vx;
+                    dot.vy = dot.vy;
+                }
+                dot.x += dot.vx;
+                dot.y += dot.vy;
+            }
+        }
+
+        function connectDots() {
+            for (var i = 0; i < dots.nb; i++) {
+                for (var j = 0; j < dots.nb; j++) {
+                    i_dot = dots.array[i];
+                    j_dot = dots.array[j];
+
+                    if ((i_dot.x - j_dot.x) < dots.distance && (i_dot.y - j_dot.y) < dots.distance && (i_dot.x - j_dot.x) > -dots.distance && (i_dot.y - j_dot.y) > -dots.distance) {
+                        if ((i_dot.x - mousePosition.x) < dots.d_radius && (i_dot.y - mousePosition.y) < dots.d_radius && (i_dot.x - mousePosition.x) > -dots.d_radius && (i_dot.y - mousePosition.y) > -dots.d_radius) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = averageColorStyles(i_dot, j_dot);
+                            ctx.moveTo(i_dot.x, i_dot.y);
+                            ctx.lineTo(j_dot.x, j_dot.y);
+                            ctx.stroke();
+                            ctx.closePath();
+                        }
+                    }
+                }
+            }
+        }
+
+        function drawDots() {
+            for (var i = 0; i < dots.nb; i++) {
+                var dot = dots.array[i];
+                dot.draw();
+            }
+        }
+
+        function animateDots() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            moveDots();
+            connectDots();
+            drawDots();
+
+            requestAnimationFrame(animateDots);
+        }
+
+        $('canvas').on('mousemove', function (e) {
+            // mousePosition.x = e.pageX;
+            // mousePosition.y = e.pageY;
+            mousePosition.x = canvas.width / 2;
+            mousePosition.y = canvas.height / 3;
+        });
+
+        $('canvas').on('mouseleave', function (e) {
+            mousePosition.x = canvas.width / 2;
+            mousePosition.y = canvas.height / 3;
+        });
+
+        createDots();
+        requestAnimationFrame(animateDots);
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

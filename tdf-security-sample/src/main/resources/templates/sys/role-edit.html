@@ -1,0 +1,127 @@
+<div class="modal-dialog ">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h4 class="modal-title" id="myModalLabel">角色信息</h4>
+		</div>
+		<div class="modal-body">
+			<form id="form-wizard" name="form-wizard" class="form-horizontal"
+				th:object="${roleDto}">
+				<input id="id" type="hidden" name="id" th:value="${roleDto.id}"
+					readonly="readonly" /> 
+				<input id="flag" type="hidden" name="flag"
+					th:value="${roleDto.flag}" readonly="readonly" /> 
+				<input id="token" type="hidden" name="token" th:value="${roleDto.token}"
+					readonly="readonly" /> 
+				<div class="form-group">
+					<label for="websiteName" class="col-lg-2 col-sm-2 control-label">角色序号</label>
+					<div class="col-lg-10">
+						<input id="roleIndex"  type="number" name="roleIndex"
+							th:value="${roleDto.roleIndex==null? 1:(roleDto.roleIndex)}" class="required text-danger form-control" placeholder="部门序号" /> 
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="websiteName" class="col-lg-2 col-sm-2 control-label">角色名称</label>
+					<div class="col-lg-10">
+						<input th:field="*{roleName}" type="text" name="roleName" placeholder="  " th:value="${roleDto.roleName}"
+							class="required form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="websiteName" class="col-lg-2 col-sm-2 control-label">角色描述</label>
+					<div class="col-lg-10">
+						<input th:field="*{roleDesc}" type="text" name="roleDesc" placeholder="  " th:value="${roleDto.roleDesc}"
+							class="required form-control" />
+					</div>
+				</div>				
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button id="reset" type="button" class="btn btn-default"
+				data-dismiss="modal">关闭</button>
+			<button id="saveButton" type="button" class="btn btn-primary">提交</button>
+			<span id="tip"> </span>
+		</div>
+	</div>
+</div>
+ 
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$(function() {
+	     $('#form-wizard').bootstrapValidator({
+//		        live: 'disabled',
+		        message: 'This value is not valid',
+		        feedbackIcons: {
+		            valid: 'glyphicon glyphicon-ok',
+		            invalid: 'glyphicon glyphicon-remove',
+		            validating: 'glyphicon glyphicon-refresh'
+		        },
+		        fields: {
+		        	roleIndex: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '序号必填'
+		                    }
+		                }
+		            },
+		            roleName: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '角色名必填'
+		                    },
+		                    stringLength: {
+		                        min: 4,
+		                        max: 20,
+		                        message: '角色名长度必须4-20字符'
+		                    },
+							regexp : {
+								regexp : /^[\u4e00-\u9fa5_a-zA-Z·]+$/,
+								message : '不能输入数字和特殊字符'
+							}
+		                }
+		            },		            
+		            roleDesc: {
+		                validators: {
+		                    stringLength: {
+		                        min: 0,
+		                        max: 255,
+		                        message: '角色描述应小于255字符'
+		                    },
+							regexp : {
+								regexp : /^[\u4e00-\u9fa5a-zA-Z·]+$/,
+								message : '不能输入数字和特殊字符'
+							}
+		                }
+		            }
+		        }
+		    });
+		
+			$("#saveButton").click(function() {
+				var flag = $('#form-wizard').bootstrapValidator('validate').data('bootstrapValidator').isValid();
+				if(flag){
+					var models = new Array();
+					var str = $('#form-wizard').serializeObject();
+					models.push(str);
+					$.post("sys/role-save.json", {
+						models : JSON.stringify(models)
+					}, function(result) {				console.log(result+"-----");
+					//	showTips("保存成功");
+						$('#Modal_edit').modal('hide');
+						var warn = result.success;
+						if (warn != null&&warn==true) {
+							
+							layer.msg('保存成功', {icon: 1});
+						}else{
+							layer.msg('保存失败', {icon: 2});
+						}
+						//调用父页面刷新方法
+						refreshFunction();
+						
+					}); 
+				}
+			});
+
+	});
+	/*]]>*/
+</script>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="_csrf_parameter" th:content="${_csrf.parameterName}"
+          th:if="${_csrf}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"
+          th:if="${_csrf}" />
+    <meta name="_csrf" th:content="${_csrf.token}" th:if="${_csrf}" />
+    <title>太极开源平台</title>
+    <!--/*/<th:block th:include="layout/include::include">/*/-->
+    <!--/*/</th:block>/*/-->
+</head>
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <a href="/"><img src="images/logo.png" alt="" /></a>
+        </div>
+        <div class="logo-icon text-center">
+            <a href="/"><img src="images/logo_icon.png" alt="" /></a>
+        </div>
+        <!--logo and iconic logo end-->
+
+        <div class="left-side-inner" th:include="layout/left::menu"></div>
+    </div>
+    <!-- left side end-->
+    <!-- main content start-->
+    <div class="main-content" id="main">
+        <!-- header section start-->
+        <div class="header-section">
+            <!--toggle button start-->
+            <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+            <!--toggle button end-->
+
+            <!--notification menu start -->
+            <div class="menu-right">
+                <ul class="notification-menu">
+                    <li><a href="#" class="btn btn-default dropdown-toggle"
+                           data-toggle="dropdown">
+                        <img  th:src="${avatar}== '' ? '/images/default.jpg': files+'/'+${avatar}" ></img>
+                        <span th:text="${session.user.userName}+'，您好！'">张三，您好！</span> <span
+                            class="caret"></span>
+                    </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                            <li><a href="#"
+                                   th:onclick="'javascript:openUserSetting(\''+${session.user.id}+'\')'"><i
+                                    class="fa fa-cog"></i> 设置</a></li>
+                            <li><a href="#" th:href="logout"><i
+                                    class="fa fa-sign-out"></i> 退出</a></li>
+                        </ul></li>
+
+                </ul>
+            </div>
+            <!--notification menu end -->
+        </div>
+        <!-- header section end-->
+        <!-- page heading start-->
+        <section class="content-header">
+            <h1 id="breadcrumb_title" style="margin-left: 20px">
+                用户管理 <small>列表</small>
+            </h1>
+            <ol class="breadcrumb" id="breadcrumb">
+                <li><a href=""><i class="fa fa-home"></i> 首页</a></li>
+                <li class="active">服务</li>
+            </ol>
+        </section>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper" id="wrapper">
+            <h1>默认登录成功页面</h1>
+        </div>
+
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <footer> 2017 &copy;版权归太极计算机股份有限公司所有，仅供太极员工在公司网络环境内使用，不得对外传播。 </footer>
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+    <div class="modal fade" id="userSetModal" tabindex="1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true"></div>
+</section>
+
+<!--/*/<th:block th:include="layout/include::js">/*/-->
+<!--/*/</th:block>/*/-->
+
+<script id="breadcrumb-template" type="text/x-handlebars-template">
+    <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+    <li class="">{{root}}</li>
+    <li class="current" onclick="load('{{url}}')">{{sub}}</li>
+</script>
+
+
+<script type="text/javascript">
+    /*<![CDATA[*/
+    //默认加载右侧内容
+    load("sys/user-list");
+
+    function load(url){
+        $("#wrapper").load(url);
+    }
+    $("#main").css("height","auto");
+
+    //切换面包屑导航
+    function breadcrumb(root,sub,url){
+        var data={};
+        data.root=root;
+        data.sub=sub;
+        data.url=url;
+        $('#breadcrumb_title').text(sub);
+        var myTemplate = Handlebars.compile($("#breadcrumb-template").html());
+        $('#breadcrumb').html(myTemplate(data));
+    }
+
+    function openUserSetting(id){
+        $('#userSetModal').modal('show');
+        $('#userSetModal').load('sys/user-setting?id='+id);
+    }
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+
+    /*]]>*/
+</script>
+
+
+</body>
+</html>

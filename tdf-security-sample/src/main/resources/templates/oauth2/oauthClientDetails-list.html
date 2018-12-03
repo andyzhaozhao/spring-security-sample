@@ -1,0 +1,255 @@
+<div class="container-fluid">
+    <!-- 查询开始 -->
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" id="formSearch">
+                <div class="panel ">
+                    <header class="panel-heading">
+                        查询条件
+                        <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"/>
+                            <a href="javascript:;" class="fa fa-times"/>
+						</span>
+                    </header>
+                    <div class="panel-body">
+                        <div class="col-md-3 col-sm-3 col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">应用名称</label>
+                                <div class="col-md-8">
+                                    <input name="additionalInformation" type="text" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4"> 授权类型</label>
+                                <div class="col-md-8">
+                                    <input name="authorizedGrantTypes" type="text"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <center>
+                            <input type="button" id="searchBtn" value="查询" class="btn btn-primary"/>
+                            <input type="reset" id="btn_reset" class="btn btn-reset" value="重置"/>
+                        </center>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 查询结束 -->
+    <!-- 列表 -->
+    <div id="toolbar">
+        <button class="btn btn-default" type="button" id="add">
+            <span class="fa fa-plus" aria-hidden="true"></span>新 增
+        </button>
+    </div>
+    <table class="table table-hover" id="oauthClientDetailsTable">
+    </table>
+</div>
+<!--  表单页面，弹出 -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
+     tabindex="-1" id="myModal" class="modal fade"></div>
+
+<script type="text/javascript">
+    /*<![CDATA[*/
+    //初始化Table
+    $('#oauthClientDetailsTable').bootstrapTable({
+        url: 'oauth2/oauthClientDetails-list', //请求后台的URL（*）
+        method: 'post', //请求方式（*）
+        dataType: 'json',
+        contentType: "application/x-www-form-urlencoded",
+        toolbar: '#toolbar', //工具按钮用哪个容器
+        undefinedText: "",//当数据为 undefined 时显示的字符
+        striped: true, //是否显示行间隔色
+        cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+        pagination: true, //是否显示分页（*）
+        pageSize: 10, //每页显示的记录数
+        pageNumber: 1, //当前第几页
+        pageList: [10, 15, 20, 25], //记录数可选列表
+        sortable: false, //是否启用排序
+        sortOrder: "asc", //排序方式
+        sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+        ////查询参数,每次调用是会带上这个参数，可自定义
+        queryParams: queryParams,
+        search: false, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+        strictSearch: true,
+        showColumns: true, //是否显示所有的列
+        showRefresh: true, //是否显示刷新按钮
+        minimumCountColumns: 2, //最少允许的列数
+        responseHandler: responseHandler,
+        clickToSelect: true, //是否启用点击选中行
+        height: 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+        uniqueId: "id", //每一行的唯一标识，一般为主键列
+        showToggle: true, //是否显示详细视图和列表视图的切换按钮
+        cardView: false, //是否显示详细视图
+        detailView: false, //是否显示父子表
+        columns: [
+            {
+                checkbox: true,
+            }, {
+                field: "autoapprove",
+                title: "应用名称"
+            },
+            /* {
+             field : "resourceIds",
+             title : "资源"
+             }, */
+            {
+                field: "clientSecret",
+                title: "应用秘钥"
+            },
+            /* {
+             field : "scope",
+             title : "范围"
+             }, */
+            {
+                field: "authorizedGrantTypes",
+                title: "授权类型"
+            },
+            {
+                field: "webServerRedirectUri",
+                title: "服务器重定向URI"
+            },
+            /*
+             {
+             field : "authorities",
+             title : "权限"
+             },
+             /* {
+             field : "accessTokenValidity",
+             title : "访问令牌的有效性"
+             },
+             {
+             field : "refreshTokenValidity",
+             title : "刷新令牌的有效性"
+             },
+
+             {
+             field : "autoapprove，additionalInformation",
+             title : "自动批准"
+             },
+             {
+             field : "flag",
+             title : "标记"
+             }, */
+            {
+                title: '操作',
+                field: 'clientId',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    var id = row.clientId;
+                    var e;
+                    e = ' <button type="button" class="btn btn-info" onclick="edit(\''
+                            + id
+                            + '\')">修改</button> <button type="button" class="btn btn-danger"' +
+                            '  onclick="delcfm(\'' + id + '\')">删除</button>';
+                    return e;
+                },
+                events: 'operateEvents'
+            }]
+    });
+    function responseHandler(res) {
+        if (res) {
+            return {
+                "rows": res.obj.list,
+                "total": res.obj.total
+            };
+
+        } else {
+            return {
+                "rows": [],
+                "total": 0
+            };
+        }
+    }
+
+    //设置查询条件，把分页，查询条件，排序等信息拼接成一个models字符串对象传递至后台
+    function queryParams(params) {
+        var searchTerm = $("#formSearch").serializeObject();
+        var str = {
+            "page": this.pageNumber,
+            "pageSize": this.pageSize,
+            "filter": {
+                "filters": [{
+                    "field": "additionalInformation",
+                    "value": searchTerm.additionalInformation
+                }, {
+                    "field": "authorizedGrantTypes",
+                    "value": searchTerm.authorizedGrantTypes
+                }]
+            }
+        };
+        var baseData = JSON.stringify(str);
+        var param = {
+            models: baseData
+        };
+        return param;
+    }
+
+    $(function () {
+        //查询
+        $("#searchBtn").click(function () {
+            $('#oauthClientDetailsTable').bootstrapTable('refresh');
+        });
+
+        //增加新
+        $("#add").click(function () {
+            $('#myModal').modal('show');
+            $('#myModal').load('oauth2/oauthClientDetailsAdd');
+        });
+    });
+
+    //编辑
+    function edit(id) {
+        $('#myModal').modal('show');
+        $('#myModal').load('oauth2/oauthClientDetailsEdit?id=' + id);
+    }
+    //删除按钮提示
+    function delcfm(id) {
+        $('#fk_id').val(id);
+        $('#delcfmModel').modal();
+    }
+    //执行删除
+    function urlSubmit() {
+        var fk_id = $('#fk_id').val();
+        $.post("oauth2/oauthClientDetailsDelete", {
+            'clientId': fk_id
+        }, function (result) {
+            $('#oauthClientDetailsTable').bootstrapTable('refresh');
+        });
+    }
+
+    /*]]>*/
+</script>
+<!-- 信息删除确认 -->
+<div class="modal fade" id="delcfmModel">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <p>您确认要删除吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input id="fk_id" type="hidden"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a onclick="urlSubmit()" class="btn btn-warning"
+                   data-dismiss="modal">确定</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

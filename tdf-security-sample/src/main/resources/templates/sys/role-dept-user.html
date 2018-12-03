@@ -1,0 +1,324 @@
+<!-- 查询面板  start -->
+<form class="form-horizontal" role="form" id="roleUserForm">
+    <div class="row" id="deptUserList-search">
+        <div class="modal fade" id="ModalDeptUser" tabindex="1" role="dialog" aria-labelledby="myModalLabelDeptUser"
+             aria-hidden="true"></div>
+        <div class="col-md-12">
+            <div class="panel">
+                <header class="panel-heading">
+                    查询条件
+                </header>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-lg-4 col-sm-2 control-label">登录名称</label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="login-name" name="loginName" class="form-control"
+                                           placeholder=" "/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-lg-4 col-sm-2 control-label">真实姓名</label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="user-name" name="userName" class="form-control"
+                                           placeholder=" "/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-lg-4 col-sm-2 control-label">邮箱地址</label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="e-mail" name="email" class="form-control" placeholder=" "/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="roleUserList-sort">
+        <div class="col-md-12">
+            <div class="panel">
+                <header class="panel-heading">
+                    排序条件
+                </header>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-lg-4 col-sm-2 control-label">首排</label>
+                                <div class="col-lg-8">
+                                    <select id="first-opt" name="first" onchange="" class="form-control">
+                                        <option value="loginName">登录名称</option>
+                                        <option value="userName">真实姓名</option>
+                                        <option value="email">邮件地址</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-lg-4 col-sm-2 control-label">排序</label>
+                                <div class="col-lg-8">
+                                    <select id="first-sort" name="first" onchange="" class="form-control">
+                                        <option value="ASC">升序</option>
+                                        <option value="DESC">降序</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-lg-4 col-sm-2 control-label">次排</label>
+                                <div class="col-lg-8">
+                                    <select id="second-opt" name="second" onchange="" class="form-control">
+                                        <option value="loginName">登录名称</option>
+                                        <option value="userName">真实姓名</option>
+                                        <option value="email">邮件地址</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-lg-4 col-sm-2 control-label">排序</label>
+                                <div class="col-lg-8">
+                                    <select id="second-sort" name="second" onchange="" class="form-control">
+                                        <option value="ASC">升序</option>
+                                        <option value="DESC">降序</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="text-center">
+                        <input type="button" id="btn_searcher" value="查询" class="btn btn-primary"></input>
+                        <input type="reset" id="btn_reset" class="btn btn-reset"></input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 查询面板  end -->
+<!-- 信息面板  start -->
+<div class="row" id="roleUserList-div">
+    <div class="col-md-12">
+        <div class="panel">
+            <header class="panel-heading">
+                角色机构用户列表
+            </header>
+            <div class="panel-body">
+                <table id="roleUserListTable"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 信息面板  end -->
+<!-- 加载数据  函数方法 start -->
+<script th:inline="javascript">
+    var roleId = [[${roleId}]];
+    $(function () {
+        var selectedUserIds = [[${selectedUserIds}]];
+        if (roleId == null) {
+            roleId = "";
+        }
+        //获取已经被选中的数据，与后选中的组合
+        overAllIds = selectedUserIds;
+        //数据加载
+        $('#roleUserListTable').bootstrapTable({
+            url: 'sys/role-dept-user-list',
+            method: 'post',                      //请求方式（*）
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            undefinedText: "",					//当数据为 undefined 时显示的字符
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            pageSize: 5,  						//每页显示的记录数
+            pageNumber: 1, 						//当前第几页
+            pageList: [5, 10, 15, 20, 25],  		//记录数可选列表
+            sortable: false,                    //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            //查询参数,每次调用是会带上这个参数，可自定义
+            queryParams: queryParams,
+            search: false,                      //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 4,             //最少允许的列数
+            responseHandler: responseHandler,
+            //clickToSelect: true,              //是否启用点击选中行
+            //height: 600,                      //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                  //是否显示父子表
+            columns: [{
+                checkbox: true,
+                align: 'center',
+                formatter: function (value, row, index) {
+                    if ($.inArray(row.id, overAllIds) != -1) {// 因为 判断数组里有没有这个 id
+                        return {
+                            checked: true               // 存在则选中
+                        }
+                    }
+                    if (selectedUserIds.indexOf(row.id) > -1) {
+                        return {
+                            checked: true//设置选中
+                        };
+                    }
+                }
+            }, {
+                field: 'id',
+                title: 'ID',
+                visible: false
+            }, {
+                field: 'loginName',
+                title: '登录名称'
+            }, {
+                field: 'userName',
+                title: '真实姓名'
+            }, {
+                field: 'email',
+                title: '邮件地址'
+            }, {
+                field: 'phoneNum',
+                title: '手机号码'
+            }]
+        });
+        //为翻页保留checkbox选中准备
+        $('#roleUserListTable').on('uncheck.bs.table check.bs.table check-all.bs.table uncheck-all.bs.table', function (e, rows) {
+            var datas = $.isArray(rows) ? rows : [rows];        // 点击时获取选中的行或取消选中的行
+            examine(e.type, datas);                              // 保存到全局 Array() 里
+        });
+        //校验
+        $('#roleUserForm')
+                .bootstrapValidator(
+                        {
+                            //live: 'disabled',
+                            message: 'This value is not valid',
+                            feedbackIcons: {
+                                valid: 'glyphicon glyphicon-ok',
+                                invalid: 'glyphicon glyphicon-remove',
+                                validating: 'glyphicon glyphicon-refresh'
+                            },
+                            fields: {
+                                loginName: {
+                                    validators: {
+                                        regexp: {
+                                            regexp: /^[_a-zA-Z0-9-]+$/,
+                                            message: '不能输入中文和特殊字符'
+                                        }
+                                    }
+                                },
+                                userName: {
+                                    validators: {
+                                        regexp: {
+                                            regexp: /^[\u4e00-\u9fa5a-zA-Z·]+$/,
+                                            message: '不能输入数字和特殊字符'
+                                        }
+                                    }
+                                },
+                                email: {
+                                    validators: {
+                                        emailAddress: {
+                                            message: '邮箱格式不正确'
+                                        }
+                                    }
+                                },
+
+                            }
+                        });
+    });
+
+    //重置表单所有验证规则
+    $("#btn_reset").click(function () {
+        $('#roleUserForm').data("bootstrapValidator").resetForm();
+    });
+
+    //访问成功回调函数
+    function responseHandler(res) {
+        if (res) {
+            return {
+                "rows": res.obj.users,
+                "total": res.obj.total
+            };
+
+        } else {
+            return {
+                "rows": [],
+                "total": 0
+            };
+        }
+    }
+    //搜索
+    $("#btn_searcher").click(function () {
+        var flag = $('#roleUserForm').bootstrapValidator(
+                'validate').data('bootstrapValidator')
+                .isValid();
+        if (flag) {
+            refreshFunctionUser();
+        }
+
+    });
+
+    //设置查询条件，把分页，查询条件，排序等信息拼接成一个models字符串对象传递至后台
+    function queryParams(params) {
+        var search = {};
+        $.each($("#roleUserForm").serializeArray(), function (i, field) {
+            search[field.name] = field.value;
+        });
+        var json = {
+            'page': this.pageNumber,
+            'pageSize': this.pageSize,
+            "roleId": roleId,
+            'filter': {
+                'filters': [{
+                    field: "loginName",
+                    value: search.loginName
+                }, {
+                    field: "userName",
+                    value: search.userName
+                }, {
+                    field: "email",
+                    value: search.email
+                }]
+            },
+            'sort': [{
+                field: $('#first-opt').val(),
+                dir: $('#first-sort').val()
+            }, {
+                field: $('#second-opt').val(),
+                dir: $('#second-sort').val()
+            }]
+        };
+        var baseData = JSON.stringify(json);
+        var param = {
+            models: baseData
+        };
+
+        return param;
+    }
+    //刷新
+    function refreshFunctionUser() {
+        $('#roleUserListTable').bootstrapTable('refresh');
+    }
+
+</script>
+<!-- 加载数据  函数方法 end -->
+ 

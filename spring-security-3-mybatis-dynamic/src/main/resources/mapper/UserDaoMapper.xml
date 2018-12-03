@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.taiji.third.dao.UserDao">
+    <resultMap id="userMap" type="cn.com.taiji.third.domain.User">
+        <id property="id" column="ID"/>
+        <result property="user_name" column="user_name"/>
+        <result property="login_name" column="login_name"/>
+        <result property="password" column="password"/>
+        <collection property="roles" ofType="cn.com.taiji.third.domain.Role">
+            <result column="role_name" property="role_name"/>
+        </collection>
+    </resultMap>
+    <select id="findByUserName" parameterType="String" resultMap="userMap">
+		select u.*
+		,r.role_name
+		from user_info u
+        LEFT JOIN role_user ru on u.id = ru.user_id
+        LEFT JOIN role r on r.id = ru.role_id
+        where u.login_name= #{user_name}
+	</select>
+    <select id="listAll" resultType="cn.com.taiji.third.domain.User">
+        select *
+        from user_info u
+    </select>
+</mapper>

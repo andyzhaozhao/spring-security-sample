@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cn.com.taiji</groupId>
+    <artifactId>spring-security-sample</artifactId>
+    <version>0.9</version>
+    <packaging>pom</packaging>
+
+    <name>spring-security-sample</name>
+    <description>spring security sample</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.17.RELEASE</version>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <modules>
+        <module>spring-security-1-0-initial</module>
+        <module>spring-security-1-1-helloworld</module>
+        <module>spring-security-1-1-x509</module>
+        <module>spring-security-1-1-openid</module>
+        <module>spring-security-1-1-cas</module>
+        <module>spring-security-1-1-ldap</module>
+        <module>spring-security-1-1-helloworld-config</module>
+        <module>spring-security-1-1-helloworld-headers</module>
+        <module>spring-security-1-2-actuator</module>
+        <module>spring-security-2-1-jdbc</module>
+        <module>spring-security-2-2-jdbc-mysql</module>
+        <module>spring-security-2-3-jdbc-custom</module>
+        <module>spring-security-2-3-jdbc-rememberme</module>
+        <module>spring-security-3-1-mybatis-role</module>
+        <module>spring-security-3-mybatis-dynamic</module>
+        <module>tdf-security-sample</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

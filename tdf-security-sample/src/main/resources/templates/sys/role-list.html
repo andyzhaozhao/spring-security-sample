@@ -1,0 +1,364 @@
+<div class="modal fade" id="Modal"  tabindex="1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ></div>
+<div class="modal fade" id="Modal_edit"  tabindex="1" role="dialog" aria-labelledby="myModalLabelEdit" aria-hidden="true" ></div>
+<div class="modal fade" id="Modal_group"  tabindex="1" role="dialog" aria-labelledby="myModalLabelGroup" aria-hidden="true" ></div>
+<div class="modal fade" id="Modal_menu" tabindex="1" role="dialog" aria-labelledby="myModalLabelMenu" aria-hidden="true"  ></div>
+<!-- 查询面板  start -->
+<form class="form-horizontal" role="form" id="roleForm">
+	<div class="row" id="roleList-search">
+		<div class="col-md-12">
+			<div class="panel">
+				<header class="panel-heading">
+					查询条件  
+				</header>
+				<div class="panel-body">
+					<div class="col-lg-12">
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="col-lg-4 col-sm-2 control-label">角色名称</label>					                
+								<div class="col-lg-8">
+									<input type="text" id="s_roleName" name="roleName" class="form-control" placeholder=" " />
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="col-lg-4 col-sm-2 control-label">角色描述</label>					                
+								<div class="col-lg-8">
+									<input type="text" id="s_roleDesc" name="roleDesc" class="form-control" placeholder=" " />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" id="roleList-sort">
+		<div class="col-md-12">
+			<div class="panel">
+			    <header class="panel-heading">
+					排序条件 
+				</header>
+				<div class="panel-body">
+			   		<div class="col-lg-12">
+			    		<div class="col-lg-4">
+							<div class="form-group">
+								<label class="col-lg-4 col-sm-2 control-label">首排</label>
+								<div class="col-lg-8">
+								  <select id="first-opt" name="first" onchange="" class="form-control">
+										<option value="roleName">角色名称</option>
+										<option value="roleDesc">角色描述</option>
+								  </select>
+								</div>
+							</div>
+			    		</div>			
+						<div class="col-lg-4">		
+							<div class="form-group">
+								<label class="col-lg-4 col-sm-2 control-label">排序</label>
+								<div class="col-lg-8">
+									<select id="first-sort" name="first" onchange="" class="form-control">
+												<option value="ASC">升序</option>
+												<option value="DESC">降序</option>
+									</select>
+								</div>
+							</div>
+						</div>
+			  		</div>
+			  	  
+			  		<div class="col-lg-12">
+				    	<div class="col-lg-4">
+							<div class="form-group">
+									<label class="col-lg-4 col-sm-2 control-label">次排</label>
+									<div class="col-lg-8">
+										<select id="second-opt" name="second" onchange="" class="form-control">
+											<option value="roleName">角色名称</option>
+											<option value="roleDesc">角色描述</option>
+										</select>
+									</div>
+							</div>
+				    	</div>			
+						<div class="col-lg-4">		
+							<div class="form-group">
+								<label class="col-lg-4 col-sm-2 control-label">排序</label>
+									<div class="col-lg-8">
+									  <select id="second-sort" name="second" onchange="" class="form-control">
+												<option value="ASC">升序</option>
+												<option value="DESC">降序</option>
+									  </select>
+									</div>
+							</div>
+						</div>
+			  		</div>
+				</div>
+				<div class="panel-footer">
+					     <div class="text-center">
+							<input type="button" id="btn_searcher"  value ="查询" class="btn btn-primary"></input>
+							<input type="reset"  id="btn_reset" class="btn btn-reset"></input>
+					     </div>
+			   </div>
+			</div>	
+		</div>
+ 	</div>
+</form>
+<!-- 查询面板  end -->
+<!-- 信息面板  start -->
+<div class="row" id="roleList-div">
+	<div class="col-md-12">
+		<div class="panel">
+			<header class="panel-heading">
+				角色列表
+			</header>
+			<div class="panel-body">
+				<div class="col-lg-12">
+					<div id="toolbar" class="btn-group">
+						<button id="add" type="button" class="btn btn-default">
+							<span class="fa fa-plus" aria-hidden="true"></span>新增
+						</button>
+						<button id="remove" type="button" class="btn btn-default">
+							<span class="fa fa-times" aria-hidden="true"></span>删除
+						</button>
+					</div>
+					<table id="roleListTable"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> 
+<!-- 信息面板  end -->
+<!-- 加载数据  函数方法 start -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+	$(function() {
+		//数据加载
+		$('#roleListTable').bootstrapTable({
+		    url: 'sys/roleList',
+		    method: 'post',                      //请求方式（*）
+			dataType:'json',
+		    contentType: "application/x-www-form-urlencoded",
+		    toolbar: '#toolbar',                //工具按钮用哪个容器
+		    undefinedText: "",//当数据为 undefined 时显示的字符
+		    striped: true,                      //是否显示行间隔色
+		    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+		    pagination: true,                   //是否显示分页（*）
+		    pageSize: 5,  //每页显示的记录数
+		    pageNumber:1, //当前第几页
+		    pageList: [5,10, 15, 20, 25],  //记录数可选列表
+		    sortable: false,                     //是否启用排序
+		    sortOrder: "asc",                   //排序方式
+		    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+		    ////查询参数,每次调用是会带上这个参数，可自定义
+		    queryParams: queryParams,
+		    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+		    strictSearch: true,
+		    showColumns: true,                  //是否显示所有的列
+		    showRefresh: true,                  //是否显示刷新按钮
+		    minimumCountColumns: 4,             //最少允许的列数
+		    responseHandler:function(res) {
+				if (res && res.obj) {
+					return {
+						"rows" : res.obj.roles,
+						"total" : res.obj.total
+					};
+
+				} else {
+					return {
+						"rows" : [],
+						"total" : 0
+					};
+				}
+			},
+		    //clickToSelect: true,                //是否启用点击选中行
+		    //height: 600,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+		    uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+		    showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+		    cardView: false,                    //是否显示详细视图
+		    detailView: false,                   //是否显示父子表
+		    columns: [{
+					checkbox : true
+				},{
+		        field: 'roleIndex',
+		        title: '角色序号',
+				visible : false
+		    },{
+		        field: 'roleName',
+		        title: '角色名称'
+		    },{
+		        field: 'roleDesc',
+		        title: '角色描述'
+		    },{
+		   	    title: '操    作',
+		          field: 'id',
+		          formatter:function(value,row,index){
+		          	var id=row.id;
+		          	var e ='<a href ="#" title="分配角色机构用户"><span class="fa fa-sitemap" onclick="editRoleUser(\''+id+'\')"></span></a>&nbsp;&nbsp;'
+							+'<a href ="#" title="分配角色菜单"><span class="fa fa-gears" onclick="editRoleMenu(\''+id+'\')"></span></a>&nbsp;&nbsp;'
+							//+'<a href ="#" title="分配用户组"><span class="fa fa-users"  onclick="editRoleGroups(\''+id+'\')"></span></a>&nbsp;&nbsp;'
+			          	  	+'<a href ="#" title="编辑"><span class="fa fa-wrench" onclick="editRole(\''
+							+ id
+							+ '\')"> </span></a>&nbsp;&nbsp;'
+							+ '<a href ="#" title="删除"><span class="fa fa-times"  onclick="deleteRoleById(\''
+							+ id
+							+ '\')"> </span></a>&nbsp;&nbsp;';
+	/* 	          	  	   +'<button type="button" class="btn btn-primary"  onclick="editRole(\''+id+'\')">编辑</button>'
+		          	       +'<button type="button" class="btn btn-danger"  onclick="deleteRoleById(\''+id+'\')">删除</button>'; */
+		        		return e;
+		          },
+		         events: 'operateEvents'
+		   }]
+		});
+		//为翻页保留checkbox选中准备
+	    $('#roleListTable').on('uncheck.bs.table check.bs.table check-all.bs.table uncheck-all.bs.table',function(e,rows){
+	        var datas = $.isArray(rows) ? rows : [rows];        // 点击时获取选中的行或取消选中的行
+	        examine(e.type,datas);                              // 保存到全局 Array() 里
+		});			
+		//校验
+		$('#roleForm').bootstrapValidator(
+				{
+					//		        live: 'disabled',
+					message : 'This value is not valid',
+					feedbackIcons : {
+						valid : 'glyphicon glyphicon-ok',
+						invalid : 'glyphicon glyphicon-remove',
+						validating : 'glyphicon glyphicon-refresh'
+					},
+					fields : {
+						roleName  : {
+							validators : {
+								regexp : {
+									regexp : /^[\u4e00-\u9fa5_a-zA-Z·]+$/,
+									message : '不能输入数字和特殊字符'
+								}
+							}
+						},
+						roleDesc : {
+							validators : {
+								regexp : {
+									regexp : /^[\u4e00-\u9fa5a-zA-Z·]+$/,
+									message : '不能输入数字和特殊字符'
+								}
+							}
+						}
+						
+					}
+				});
+	});	
+
+	//搜索
+    $("#btn_searcher").click(function(){
+    	var flag = $('#roleForm').bootstrapValidator(
+		'validate').data('bootstrapValidator')
+		.isValid();
+    	if(flag){
+    		 refreshFunction();
+    	}
+    	
+	});	
+
+	//设置查询条件，把分页，查询条件，排序等信息拼接成一个models字符串对象传递至后台
+	function queryParams(params){
+		var search = {};
+		$.each($("#roleForm").serializeArray(), function(i, field) {
+			search[field.name] = field.value;
+		});
+		var json = {
+			'page' : this.pageNumber,
+			'pageSize' : this.pageSize,
+			'filter':{
+				'filters':[{
+						field : "roleName",
+						value : search.roleName
+					},{
+						field : "roleDesc",
+						value : search.roleDesc
+					}]
+			},
+			'sort':[{
+					field : $('#first-opt').val(),
+					dir : $('#first-sort').val()
+				},{
+					field : $('#second-opt').val(),
+					dir : $('#second-sort').val()
+			}]
+		};
+		var baseData =JSON.stringify(json);
+		var param = {
+			models :baseData
+		};
+	       
+		return  param;
+	}
+	//刷新
+	function refreshFunction() {
+		$('#roleListTable').bootstrapTable('refresh');
+	}
+	//编辑角色
+	function editRole(obj){
+	    $('#Modal_edit').modal('show');
+	    $('#Modal_edit').load('sys/role-edit?id='+obj+'');
+	}
+	//分配机构角色用户
+	function editRoleUser(obj){
+/* 	    $('#Modal').modal('show');
+	    $('#Modal').load('sys/role-user-edit?roleId='+obj); */
+		load('sys/role-dept-user-page?roleId='+obj);
+	}
+	
+	//分配角色菜单
+	function editRoleMenu(obj){
+	    $('#Modal_menu').modal('show');
+	    $('#Modal_menu').load('sys/role-menu?roleId='+obj);
+	}
+
+	//增加新角色
+	$( "#add" ).click(function(){
+		$('#Modal_edit').modal('show');
+		$('#Modal_edit').load('sys/role-add');
+	}); 
+	
+	//按用户ID删除用户
+	function deleteRoleById(id){	
+		var ids = new Array();
+		ids.push(id);
+		deleteRole(ids);
+	} 
+	//执行删除
+	function deleteRole(id){
+		layer.confirm('您确认删除选中记录？', {
+	  		  btn: ['删除'] //按钮
+	  		}, function(){
+	  			$.ajax({
+	  		    	url: 'sys/role-delete',
+	  		    	data:{
+	  		    		ids:id
+	  		    	},
+	  		    	type: 'post',
+	  		    	success: function(data, textStatus, jqXHR) {
+	  		    		if(data.success){
+							layer.msg('删除角色成功', {icon: 1});
+							refreshFunction();
+						} else{
+							layer.msg(data.obj, {icon: 2});
+	  		    		}
+	  		     	},
+	  		     	error: function(jqXHR, textStatus, errorThrown) { 
+	  		     	}
+	  			 });
+	  		});
+
+	}
+	//批量删除选择的记录
+	$("#remove").click(function(){
+		if (overAllIds.length > 0) {
+			//调用参数方法
+			deleteRole(overAllIds);
+	
+		} else {
+			layer.msg("请选择删除项", {
+				icon : 2
+			});
+			return;
+		}
+ 	});
+    /*]]>*/
+</script>
+<!-- 加载数据  函数方法 end -->

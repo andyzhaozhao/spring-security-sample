@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="_csrf_parameter" th:content="${_csrf.parameterName}"
+          th:if="${_csrf}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"
+          th:if="${_csrf}"/>
+    <meta name="_csrf" th:content="${_csrf.token}" th:if="${_csrf}"/>
+    <title>太极开源平台403</title>
+</head>
+<body>
+<div id="content" style="background: #fff;">
+    <div id="content-header">
+        <h1>提示信息</h1>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="err-main">
+                    <div class="err-cont">
+                        <!--<img src="images/error.png" class="err-img"/>-->
+                        <div class="error_ex error-qx">
+                            <h3 th:text="${msg}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb">
+        <a th:if="${authentication.name}!=null" th:href="logout">注销</a>
+        <a th:if="${authentication.name}==null" th:href="login">登录</a>
+    </div>
+
+</div>
+</body>
+</html>

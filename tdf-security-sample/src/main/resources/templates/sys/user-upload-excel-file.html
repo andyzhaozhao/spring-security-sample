@@ -1,0 +1,167 @@
+<div class="modal-dialog ">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h4 class="modal-title" id="myModalLabel">用户信息导入</h4>
+		</div>
+		<div class="modal-body">
+		    <h5>请按以下模版导入：<a href="/sys/file-load"  th:href="@{/sys/file-load}">下载</a> </h5>
+			<form id="upload-file-form" enctype="multipart/form-data" class="form-horizontal">      
+               <label for="upload-file-input">选择文件：</label>
+                 <input id="upload-file-input" type="file" name="uploadfile" accept="*"  />
+			</form>
+		</div>
+		<div class="modal-footer">	
+		   
+			<button id="reset" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			<button id="uploadButton" type="button" class="btn btn-primary">上传</button>
+			<button id="importButton" type="button" class="btn btn-primary">导入</button>
+			
+			<span id="tip"> </span>
+		</div>
+	</div>
+</div>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$(document).ready(function() {	
+		
+		var filePath = "";
+		//隐藏 导入按钮
+		
+		$("#importButton").addClass('state5');
+		$("#upload-file-input").on("change", changeFile);
+		
+		function changeFile(){
+			//清空上一次的 残留
+			$("#tip").text('').removeClass('state3');
+			//重置
+			$("#uploadButton").removeClass('state5').addClass('state6');
+			$("#importButton").removeClass('state6').addClass('state5');
+			checkFile();
+		}
+		
+		//校验合法行
+		function checkFile(){
+			//初始化
+			$("#uploadButton").attr("disabled",false);
+			//校验文件为空、类型
+			var fileValue = $("#upload-file-input").val();
+			if(fileValue.length>1 && fileValue != ''){
+				var lodt = fileValue.lastIndexOf(".");
+		        var type = fileValue.substring(lodt+1);
+		        
+		        if(type != "xls" && type != "xlsx"){
+		        	$("#tip").text('文件格式不对').addClass('state3');
+		        	return false ;
+		        }else{
+		        	return true ;
+		        }
+		        
+				
+			}else{
+				   $("#tip").text('文件不能为空').addClass('state3');
+				   $("#uploadButton").attr("disabled",true);
+				return false;
+			}
+		}
+		
+		//上传功能
+		$("#uploadButton").click(
+				function (){
+					
+					if(!checkFile()){
+						return ;
+					}
+					$.ajax({
+					    url: "sys/user-upload-excel.json",
+					    type: "POST",
+					    data: new FormData($("#upload-file-form")[0]),
+					    enctype: 'multipart/form-data',
+					    processData: false,
+					    contentType: false,
+					    cache: false,
+					    success: function (result) {
+					    	console.log("--->"+result.msg);
+					    	$("#tip").text('上传成功').removeClass('state3').addClass('state4');
+					    	//显示导入按钮  隐藏上传按钮 6显示5 隐藏
+					    	$("#importButton").removeClass('state5').addClass('state6');
+					    	//上传按钮隐藏
+					    	$("#uploadButton").removeClass('state6').addClass('state5');
+					    	//返回地址
+					    	filePath = result.msg;
+					    	
+					    	$("#uploadButton").attr("disabled",true);
+					    	$("#importButton").removeAttr("disabled");
+					    },
+					    error: function (result) {
+					    	console.log(result);
+					    	//显示导入按钮  隐藏上传按钮
+					    	$("#tip").text('上传失败').removeClass('state1').addClass('state3');
+					    	
+					    }
+					  });
+				}
+		
+		);		
+	     //导入功能
+	     $("#importButton").click(
+	    		 function (){
+	    	    $(this).attr('disabled',"true");
+	    		 $.ajax({				
+	    	        url : "sys/user-excel-import.json",
+	    			dataType : "json",
+	    			data:{"fileName":filePath},
+	    			type : "POST",
+	    			success : function(result) {
+	    				 
+	    				if(result!=null){
+	    					$("#tip").text(result.msg+":"+result.obj).addClass('state3');
+		                    $(this).removeAttr("disabled");
+							display_result();
+	    				}else{
+	    					layer.msg("请按下载的模版导入数据！", {icon: 2});
+	    				}
+	    				
+	    			},
+	    			error : function(result) {
+	    			}
+	    		});
+
+	    	});
+	    
+
+	});
+	/*]]>*/
+</script>
+
+<style>
+.muted {
+	color: red;
+}
+
+.state1 {
+	color: #aaa;
+}
+
+.state2 {
+	color: #000;
+}
+
+.state3 {
+	color: red;
+}
+
+.state4 {
+	color: green;
+}
+
+.state5 {
+    display:none;
+}
+.state6 {
+ 
+    display:block;
+}
+
+</style>

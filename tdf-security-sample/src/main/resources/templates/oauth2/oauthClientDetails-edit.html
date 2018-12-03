@@ -1,0 +1,308 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close"
+                    type="button">×
+            </button>
+            <h4 class="modal-title">信息</h4>
+        </div>
+        <div class="modal-body">
+            <form id="form-wizard" enctype="multipart/form-data"
+                  name="form-wizard" class="form-horizontal"
+                  th:object=" ${OauthClientDetailsDTO}">
+                <div class="control-group">
+
+                    <!-- <input id="flag" type="hidden" name="flag"
+                        th:value="${OauthClientDetailsDTO.flag}" />
+ -->
+                    <div class="form-group ">
+                        <label class="control-label col-lg-2">客户端Id<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-5">
+                            <input id="clientId" type="text" name="clientId"
+                                   placeholder="请输入客户端id"
+                                   th:value="${OauthClientDetailsDTO.clientId}"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-lg-2"> 客户秘钥<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+                            <input id="clientSecret" type="text" name="clientSecret"
+                                   placeholder="请输入客户隐私"
+                                   th:value="${OauthClientDetailsDTO.clientSecret}"
+                                   class="form-control"/> <label for="clientSecret" class="error"
+                                                                 style="display: none;">This field is required.</label>
+                        </div>
+                    </div>
+                    <div class="form-group " style="display: none;">
+                        <label class="control-label col-lg-2"> 资源<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+                            <input id="resourceIds" type="text" name="resourceIds"
+                                   placeholder="请输入资源"
+                                   th:value="${OauthClientDetailsDTO.resourceIds}"
+                                   class="form-control"/> <label for="resourceIds" class="error"
+                                                                 style="display: none;">This field is required.</label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group ">
+                        <label class="control-label col-lg-2"> 范围<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+                            <input id="scope" type="text" name="scope" placeholder="请输入范围"
+                                   th:value="${OauthClientDetailsDTO.scope}" class="form-control"/>
+                            <label for="scope" class="error" style="display: none;">This
+                                field is required.</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-lg-2"> 授权类型<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+
+                            <select name="authorizedGrantTypes" onchange="" class="form-control">
+                                <option value="authorization_code"
+                                        th:selected="${OauthClientDetailsDTO.authorizedGrantTypes eq 'authorization_code'}">
+                                    授权码模式
+                                </option>
+                                <option value="password"
+                                        th:selected="${OauthClientDetailsDTO.authorizedGrantTypes eq 'password'}">密码模式
+                                </option>
+
+                            </select>
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-lg-2"> 回调地址<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+                            <input id="webServerRedirectUri" type="text"
+                                   name="webServerRedirectUri" placeholder="请输入服务器重定向URI"
+                                   th:value="${OauthClientDetailsDTO.webServerRedirectUri}"
+                                   class="form-control"/> <label for="webServerRedirectUri"
+                                                                 class="error" style="display: none;">This field is
+                            required.</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="display: none;">
+                        <label class="control-label col-lg-2"> 权限<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+                            <input id="authorities" type="text" name="authorities"
+                                   placeholder="请输入权限"
+                                   th:value="${OauthClientDetailsDTO.authorities}"
+                                   class="form-control"/> <label for="authorities" class="error"
+                                                                 style="display: none;">This field is required.</label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" style="display: none;">
+                        <label class="control-label col-lg-2">访问令牌的有效性<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+                            <input id="accessTokenValidity" onfocus="this.blur();"
+                                   type="number" name="accessTokenValidity" min="0" max="999999999"
+                                   th:value="${OauthClientDetailsDTO.accessTokenValidity}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <label class="control-label col-lg-2">刷新令牌的有效性<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+                            <input id="refreshTokenValidity" onfocus="this.blur();"
+                                   type="number" name="refreshTokenValidity" min="0"
+                                   max="999999999"
+                                   th:value="${OauthClientDetailsDTO.refreshTokenValidity}"/>
+
+                        </div>
+                    </div>
+                    <div class="form-group " style="display: none;">
+                        <label class="control-label col-lg-2"> 额外信息<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+                            <input id="additionalInformation" type="text"
+                                   name="additionalInformation" placeholder="请输入额外信息"
+                                   th:value="${OauthClientDetailsDTO.additionalInformation}"
+                                   class="form-control"/> <label for="additionalInformation"
+                                                                 class="error" style="display: none;">This field is
+                            required.</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-lg-2">应用名称<span
+                                class="muted">*</span></label>
+                        <div class="col-lg-10">
+                            <input id="autoapprove" type="text" name="autoapprove"
+                                   placeholder="请输入自动批准"
+                                   th:value="${OauthClientDetailsDTO.autoapprove}"
+                                   class="form-control"/> <label for="autoapprove" class="error"
+                                                                 style="display: none;">This field is required.</label>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-success" id="saveButton">提交</button>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        $('#form-wizard').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                /* resourceIds : {
+                 validators : {
+                 notEmpty : {
+                 message : '资源必填'
+                 },
+                 stringLength : {
+                 min : 2,
+                 max : 200,
+                 message : '资源长度必须2-200字符'
+                 }
+                 }
+                 }, */
+
+                clientSecret: {
+                    validators: {
+                        notEmpty: {
+                            message: '客户隐私必填'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 200,
+                            message: '客户隐私长度必须2-200字符'
+                        }
+                    }
+                },
+
+                /* scope : {
+                 validators : {
+                 notEmpty : {
+                 message : '范围必填'
+                 },
+                 stringLength : {
+                 min : 2,
+                 max : 200,
+                 message : '范围长度必须2-200字符'
+                 }
+                 }
+                 }, */
+
+                authorizedGrantTypes: {
+                    validators: {
+                        notEmpty: {
+                            message: '授权类型必填'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 200,
+                            message: '授权类型长度必须2-200字符'
+                        }
+                    }
+                },
+
+                webServerRedirectUri: {
+                    validators: {
+                        notEmpty: {
+                            message: '服务器重定向URI必填'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 200,
+                            message: '服务器重定向URI长度必须2-200字符'
+                        }
+                    }
+                }
+
+                /* authorities : {
+                 validators : {
+                 notEmpty : {
+                 message : '权限必填'
+                 },
+                 stringLength : {
+                 min : 2,
+                 max : 200,
+                 message : '权限长度必须2-200字符'
+                 }
+                 }
+                 }, */
+                /* additionalInformation : {
+                 validators : {
+                 notEmpty : {
+                 message : '额外信息必填'
+                 },
+                 stringLength : {
+                 min : 2,
+                 max : 200,
+                 message : '额外信息长度必须2-200字符'
+                 }
+                 }
+                 }, */
+
+                /* autoapprove : {
+                 validators : {
+                 notEmpty : {
+                 message : '自动批准必填'
+                 },
+                 stringLength : {
+                 min : 2,
+                 max : 200,
+                 message : '自动批准长度必须2-200字符'
+                 }
+                 }
+                 }, */
+
+            }
+        });
+
+        //提交按钮,所有验证通过方可提交
+        $("#saveButton").click(function () {
+            var flag = $('#form-wizard').bootstrapValidator('validate')
+                    .data('bootstrapValidator').isValid();
+            if (flag) {
+                debugger;
+                var url = "oauth2/oauthClientDetailsAdd";
+                var id = $('#clientId').val();
+                if (id != '') {
+                    url = "oauth2/oauthClientDetailsAdd";
+                }
+
+                var jsonStr = $('#form-wizard').serializeObject();
+                $.post(url, {
+                    models: JSON.stringify(jsonStr)
+                }, function (result) {
+                    $('#myModal').modal('hide');
+                    $('#oauthClientDetailsTable').bootstrapTable(
+                            'refresh');
+                });
+            }
+        });
+    });
+
+    /*]]>*/
+</script>
+

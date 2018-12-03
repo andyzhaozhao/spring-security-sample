@@ -1,0 +1,70 @@
+<div class="sticky-header">
+    <div class="mail-box">
+        <!--<aside class="mail-nav mail-nav-bg-color">-->
+            <!--<div>-->
+                <!--<h4 id="myModalLabel">分配机构角色用户</h4>-->
+            <!--</div>-->
+            <!--<div class="mail-nav-body">-->
+                <!--<div class="panel">-->
+                    <!--<div class="panel-heading">-->
+                        <!--<div id="deptTree"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</aside>-->
+        <!-- 用户列表 -->
+        <div class="col-lg-12" id="section-mail-list"></div>
+        <div class="modal-footer">
+            <div class="text-center">
+                <button id="save" type="button" class="btn btn-primary">提交</button>
+                <button id="toBack" type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                <span id="tip"> </span>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var roleId = "";
+    $(document).ready(function () {
+        roleId = [[${roleId}]];
+
+        if (roleId == null) {
+            roleId = "";
+        }
+        refreshFunction();
+    });
+    function refreshFunction() {
+        //加载用户  -->start
+        $('#section-mail-list').load("sys/role-dept-user?roleId=" + roleId);
+
+        //加载用户  -->end
+
+    }
+    //执行保存
+    $("#save").click(function () {
+        $.ajax({
+            url: 'sys/role-user-save',
+            type: 'post',
+            data: {
+                userIds: overAllIds,
+                preUserIds: selectedUserIds,
+                roleId: roleId
+            },
+            success: function (data, textStatus, jqXHR) {
+//                var deptId = data.deptId;
+                layer.msg('保存成功', {icon: 1});
+                refreshFunction();
+                refreshFunctionUser();
+                //load('sys/role-user-edit?roleId='+roleId);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    });
+    $("#toBack").click(function () {
+        $("#wrapper").load("sys/role-list");
+    });
+    /*]]>*/
+</script>
+

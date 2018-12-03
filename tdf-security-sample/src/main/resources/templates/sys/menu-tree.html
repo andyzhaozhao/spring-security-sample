@@ -1,0 +1,114 @@
+<div class="modal-dialog" id ="menuDialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h4 class="modal-title" id="myModalLabel">可选菜单</h4>
+		</div>
+		<div class="modal-body">
+			<div id="menuContent"> </div>
+		</div>
+		<div class="modal-footer">
+			<button id="reset" type="button" class="btn btn-default"
+				data-dismiss="modal">关闭</button>
+			<button id="saveTreeBtn" type="button" class="btn btn-primary">确定</button>
+			<span id="tip"> </span>
+		</div>
+	</div>
+</div>
+<script th:inline="javascript" xmlns:th="http://www.thymeleaf.org">
+	/*<![CDATA[*/
+	var  menuId = "";
+	var  menuName = "";
+    
+	$(document).ready(function() {
+		 $.ajax({				
+	         url : "sys/menu-tree.json",
+			 dataType : "json",
+			 data : {},
+			 type : "POST",
+			 success : function(result) {
+				 var resultDate = new Array();
+				 var jsonArray = result.obj;
+				 if (jsonArray != null && jsonArray.length>0) {
+					 walk(jsonArray, resultDate);
+				 }
+				 treeViewInit(resultDate);
+				 $('#menuContent').treeview('collapseAll', { silent: true });
+			},
+			error : function(result) {
+			}
+		});  
+	});
+	
+	//重构节点方法 nodes 数组
+	   function walk(nodes, data) {
+	          if (!nodes) { return; }
+	          $.each(nodes, function (id, node) {
+	            var obj = {
+	              id: node.id,
+	              text: node.name
+	            };
+	            if (node.children.length > 0) {
+	            	//说明是父节点
+	              obj.nodes = [];
+	              walk(node.children, obj.nodes);
+	              
+	            }
+	            
+	            data.push(obj);
+	          });
+	          return data;
+	   };	
+	   
+	   /* 初始化栏目树*/
+		function treeViewInit(data) {
+				$('#menuContent')
+						.treeview(
+								{
+									data : data, // data is not optional
+									levels : 3,
+									selectedBackColor : "#8D9CAA",
+									multiSelect : false,
+									onNodeSelected : function(event, data) {
+									//	console.log(data);
+										//子节点删除	
+										if (data.nodes === undefined
+												|| data.nodes === null) {
+											// $("#FlatTree3").treeview("deleteNode", [data.nodeId, { silent: true } ]); 
+
+										} else {
+											//alert("我是父节点");
+											//return;
+										}
+										//加载信息列表
+										var id = data.id;
+										var name =data.text;
+										
+										menuId =id;
+										menuName =name;
+										 //加载选中项
+									    //alert(id+"<---------->"+name);
+										//选中的节点 
+										//onCheckParentValue(id, name);
+									},
+									onNodeUnselected : function(event, data) {
+										var id = data.id;
+										var name =data.text;
+										resetParentValue();
+									}	
+
+								});
+				
+				
+			}
+	   
+	$("#saveTreeBtn").click(
+			function() {
+				$('#menuModal').modal('hide');
+				getMenuParenId(menuId,menuName);
+			});
+	
+	/*]]>*/
+</script>
+
