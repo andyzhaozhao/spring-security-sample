@@ -31,9 +31,15 @@ public class UserController {
     @PostMapping("addUser")
     public ModelAndView addUser(User add) {
         xsstestUser = new User(3L, add.getName(), 32);
-        ModelAndView modelAndView = new ModelAndView("redirect:users");
-        return modelAndView;
+        return initUsers(new BindingAwareModelMap());
     }
+    
+//    @PostMapping("addUser")
+//    public ModelAndView addUser(User add) {
+//        xsstestUser = new User(3L, add.getName(), 32);
+//        ModelAndView modelAndView = new ModelAndView("redirect:users");
+//        return modelAndView;
+//    }
 
     /**
      * get接口去新增数据，非常不安全
