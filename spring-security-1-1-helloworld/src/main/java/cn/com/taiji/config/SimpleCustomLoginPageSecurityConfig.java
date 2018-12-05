@@ -24,8 +24,7 @@
 ////        http.formLogin().loginPage("/login");
 //
 //        //错误案例3，把/login也给保护起来了，导致死循环：/index无权限-》重定向到/login-》/login也无权限-》重定向到/login
-////      //http.authorizeRequests()方法有很多子方法，每个子匹配器将会按照声明的顺序起作用。 
-////    	http.authorizeRequests()
+////        http.authorizeRequests()
 ////                .anyRequest().authenticated()
 ////                .and()
 ////                .formLogin().loginPage("/login");
@@ -40,7 +39,7 @@
 //        //正确配置
 //        http.authorizeRequests()
 //                // 都可以访问
-//                .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
+//                .antMatchers("/css/**", "/js/**", "/fonts/**", "/index").permitAll()
 //                .antMatchers("/login").permitAll()
 //                .anyRequest().authenticated()
 //                .and()
