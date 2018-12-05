@@ -40,7 +40,7 @@ public class SimpleCustomLoginPageSecurityConfig extends WebSecurityConfigurerAd
         //正确配置
         http.authorizeRequests()
                 // 都可以访问
-                .antMatchers("/css/**", "/js/**", "/fonts/**", "/index").permitAll()
+                .antMatchers("/css/**", "/js/**", "/fonts/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
