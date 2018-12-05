@@ -35,6 +35,20 @@
                     <a class="nav-link" href="/admins" th:href="@{/admins}">管理员管理</a>
                 </li>
             </ul>
+
+	 		<ul class="navbar-nav mr-auto navbar-right">
+	          <li class="nav-item" sec:authorize="isAnonymous()">
+				<a class="nav-link" href="/login" th:href="@{/login}">登录 </a>
+	          </li>
+	           <li class="nav-item" sec:authorize="isAuthenticated()">
+					<span class="nav-link"  sec:authentication="name"></span>
+	          </li>
+	          <li class="nav-item">
+	            	<form action="/logout" th:action="@{/logout}" method="post">
+						<input class="btn btn-default  " type="submit" value="退出" />
+					</form>
+	          </li>
+	        </ul>
         </div>
     </div>
 </nav>
