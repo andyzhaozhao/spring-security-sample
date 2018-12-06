@@ -50,12 +50,8 @@ public class HomeController {
     @GetMapping(value= {"/","/index"})
     public String home(Model model) {
         UserDTO user = (UserDTO) session.getAttribute("user");
-        if (user != null) {
-            List<Menu> menus = menuService.findRootByAuthorization(user.getRoles(),"006141059be045189b06265fa49552e8");
-            model.addAttribute("rootMenus", menus);
-        }
-//        List<MenuDTO> menus = menuService.findMenuByMark("portal");
-//        model.addAttribute("rootMenus", menus);
+        List<MenuDTO> menus = menuService.findMenuByMark("sys");
+        model.addAttribute("rootMenus", menus);
         model.addAttribute("avatar", user.getAvatar());
         return "index";//semantic
     }
@@ -64,16 +60,6 @@ public class HomeController {
     public String login() {
         return "login";
     }
-
-    @GetMapping(value = "/admin")
-    public String admin(Model model) {
-        UserDTO user = (UserDTO) session.getAttribute("user");
-        List<MenuDTO> menus = menuService.findMenuByMark("sys");
-        model.addAttribute("rootMenus", menus);
-        model.addAttribute("avatar", user.getAvatar());
-        return "admin";
-    }
-
 
     @GetMapping(value = "/reload")
     @ResponseBody
