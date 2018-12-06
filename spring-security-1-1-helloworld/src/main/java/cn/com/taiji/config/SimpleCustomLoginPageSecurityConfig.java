@@ -24,18 +24,17 @@
 ////        http.formLogin().loginPage("/login");
 //
 //        //错误案例3，把/login也给保护起来了，导致死循环：/index无权限-》重定向到/login-》/login也无权限-》重定向到/login
-////      //http.authorizeRequests()方法有很多子方法，每个子匹配器将会按照声明的顺序起作用。
-////    	http.authorizeRequests()
+////        http.authorizeRequests()
 ////                .anyRequest().authenticated()
 ////                .and()
 ////                .formLogin().loginPage("/login");
 //
 //        //错误案例4，导致静态资源也被保护起来了，怎么解决呢
-//        http.authorizeRequests()
-//                .antMatchers("/login").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin().loginPage("/login");
+////        http.authorizeRequests()
+////                .antMatchers("/login").permitAll()
+////                .anyRequest().authenticated()
+////                .and()
+////                .formLogin().loginPage("/login");
 //
 //        //正确配置
 //        http.authorizeRequests()
