@@ -38,7 +38,7 @@
         <module>spring-security-2-3-jdbc-rememberme</module>
         <module>spring-security-3-1-mybatis-role</module>
         <module>spring-security-3-mybatis-dynamic</module>
-        <module>tdf-security-sample</module>
+        <module>spring-security-4-jpa-all</module>
     </modules>
 
     <dependencies>
