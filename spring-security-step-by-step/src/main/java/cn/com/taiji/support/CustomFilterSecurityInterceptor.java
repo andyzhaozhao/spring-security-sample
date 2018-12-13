@@ -1,4 +1,4 @@
-package cn.com.taiji.third.security;
+package cn.com.taiji.support;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
@@ -6,17 +6,18 @@ import org.springframework.security.access.intercept.AbstractSecurityInterceptor
 import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.*;
 import java.io.IOException;
 
 /**
- * Created by yangyibo on 17/1/19.
+ * Created by iandtop on 2018/12/11.
  */
 @Service
-public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
+public class CustomFilterSecurityInterceptor
+        extends AbstractSecurityInterceptor implements Filter {
+
     @Autowired
     private FilterInvocationSecurityMetadataSource securityMetadataSource;
 
@@ -26,18 +27,8 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
-
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
         FilterInvocation fi = new FilterInvocation(request, response, chain);
-        invoke(fi);
-    }
-
-    public void invoke(FilterInvocation fi) throws IOException, ServletException {
         //fi里面有一个被拦截的url
         //里面调用MyInvocationSecurityMetadataSource的getAttributes(Object object)这个方法获取fi对应的所有权限
         //再调用MyAccessDecisionManager的decide方法来校验用户的权限是否足够
@@ -51,14 +42,8 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
     }
 
     @Override
-    public void destroy() {
-
-    }
-
-    @Override
     public Class<?> getSecureObjectClass() {
         return FilterInvocation.class;
-
     }
 
     @Override
@@ -66,3 +51,4 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
         return this.securityMetadataSource;
     }
 }
+
