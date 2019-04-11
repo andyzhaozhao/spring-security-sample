@@ -1,6 +1,6 @@
 package cn.com.taiji.day1.filters;
 
-import cn.com.taiji.day1.mock.Mock;
+import cn.com.taiji.day1.mock.UserServiceMock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +36,7 @@ public class LogoutFilter implements Filter {
                 return;
             }
             // 如果是登出端口，则直接删除session进行登出操作，不用进入到controller 层
-            session.removeAttribute(Mock.User_Key);
+            session.removeAttribute(UserServiceMock.User_Key);
             servletResponse.getWriter().write("Logout success!");
             return;
         }

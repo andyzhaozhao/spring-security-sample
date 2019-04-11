@@ -1,8 +1,6 @@
 package cn.com.taiji.day1.filters;
 
-import cn.com.taiji.day1.mock.Mock;
-import cn.com.taiji.day1.web.LoginController;
-import com.oracle.tools.packager.mac.MacAppBundler;
+import cn.com.taiji.day1.mock.UserServiceMock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Map;
 
 public class AccessControlFilter implements Filter {
     private static Logger logger = LoggerFactory.getLogger(AccessControlFilter.class);
@@ -27,8 +24,8 @@ public class AccessControlFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute(Mock.User_Key)!=null){
-            String username = (String) session.getAttribute(Mock.User_Key);
+        if (session != null && session.getAttribute(UserServiceMock.User_Key)!=null){
+            String username = (String) session.getAttribute(UserServiceMock.User_Key);
 
             String path = request.getServletPath();
             if(username.equals("user") && !path.equals("/a")){

@@ -39,7 +39,6 @@
         <module>spring-security-3-1-mybatis-role</module>
         <module>spring-security-3-mybatis-dynamic</module>
         <module>spring-security-4-jpa-all</module>
-        <module>spring-security-step-by-step</module>
     </modules>
 
     <dependencies>

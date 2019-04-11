@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/login}" method="post">
+    <div th:if="${param.error != null}">
+        <p>
+            请输入正确的用户名和密码。
+        </p>
+    </div>
+    <div th:if="${param.logout != null}">
+        <p>
+            您已经登出。
+        </p>
+    </div>
+    <div>
+        <label for="un">用户名</label>
+        <input type="text" id="un" name="un"/>
+    </div>
+    <br/>
+    <div>
+        <label for="pass">密码</label>
+        <input type="pass" id="pass" name="pass"/>
+    </div>
+    <br/>
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+    <button type="submit" class="btn">Log in</button>
+</form>
+</body>
+</html>

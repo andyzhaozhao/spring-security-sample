@@ -18,4 +18,44 @@ public class Permission extends Audited {
     private String url;
     //父节点id
     private String pid;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPermission_name() {
+        return permission_name;
+    }
+
+    public void setPermission_name(String permission_name) {
+        this.permission_name = permission_name;
+    }
+
+    public String getPermission_descritpion() {
+        return permission_descritpion;
+    }
+
+    public void setPermission_descritpion(String permission_descritpion) {
+        this.permission_descritpion = permission_descritpion;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
 }

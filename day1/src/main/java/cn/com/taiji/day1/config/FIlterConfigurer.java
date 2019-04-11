@@ -2,7 +2,7 @@ package cn.com.taiji.day1.config;
 
 import cn.com.taiji.day1.filters.AccessControlFilter;
 import cn.com.taiji.day1.filters.HttpBasicAuthenticationFilter;
-import cn.com.taiji.day1.filters.LoginFilter;
+import cn.com.taiji.day1.filters.UsernamePasswordLoginFilter;
 import cn.com.taiji.day1.filters.LogoutFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -41,12 +41,12 @@ public class FIlterConfigurer {
      */
     @Bean
     @Order(3)
-    public FilterRegistrationBean someFilterRegistration() {
+    public FilterRegistrationBean usernamePasswordLoginFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(loginFilter());
-//        registration.addUrlPatterns("/*");
-        registration.addUrlPatterns("/a", "/b");
-        registration.setName("loginFilter");
+        registration.setFilter(usernamePasswordLoginFilter());
+        registration.addUrlPatterns("/*");
+//        registration.addUrlPatterns("/a", "/b");
+        registration.setName("usernamePasswordLoginFilter");
 //        registration.setOrder(1);
         return registration;
     }
@@ -66,9 +66,9 @@ public class FIlterConfigurer {
      *
      * @return
      */
-    @Bean(name = "loginFilter")
-    public Filter loginFilter() {
-        return new LoginFilter();
+    @Bean(name = "usernamePasswordLoginFilter")
+    public Filter usernamePasswordLoginFilter() {
+        return new UsernamePasswordLoginFilter();
     }
 
     @Bean(name = "accessControlFilter")

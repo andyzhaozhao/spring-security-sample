@@ -1,6 +1,6 @@
 package cn.com.taiji.day1.filters;
 
-import cn.com.taiji.day1.mock.Mock;
+import cn.com.taiji.day1.mock.UserServiceMock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +48,7 @@ public class HttpBasicAuthenticationFilter implements Filter {
 
         logger.info("Basic认证，Http头信息：user '" + username + "'");
 
-        if (!Mock.userList.contains(new HashMap() {{
+        if (!UserServiceMock.userList.contains(new HashMap() {{
             put(username, password);
         }})) {
             // Basic用户名和密码不对,报错
@@ -58,9 +58,9 @@ public class HttpBasicAuthenticationFilter implements Filter {
 
         //如果有这个用户那么登录成功
         HttpSession session = request.getSession(true);
-        if (session.getAttribute(Mock.User_Key) == null) {
+        if (session.getAttribute(UserServiceMock.User_Key) == null) {
             //用户session不存在，则新建session
-            session.setAttribute(Mock.User_Key, username);
+            session.setAttribute(UserServiceMock.User_Key, username);
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
